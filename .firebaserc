@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "bagelhouse-mileaday"
+  },
+  "targets": {
+    "bagelhouse-mileaday": {
+      "hosting": {
+        "api": [
+          "mileaday-api"
+        ]
+      }
+    }
+  }
+}

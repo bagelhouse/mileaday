@@ -1,0 +1,28 @@
+{
+  "functions": {
+    "source": "app/server",
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint",
+      "npm --prefix \"$RESOURCE_DIR\" run build"
+    ],
+    "runtime": "nodejs16"
+  },
+  "emulators": {
+    "functions": {
+      "host": "localhost",
+      "port": 3999
+    }
+  },
+  "hosting": [
+    {
+      "target": "api",
+      "public": "app/server/static",
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "api"
+        }
+      ]
+    }
+  ]
+}
