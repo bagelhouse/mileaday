@@ -17,6 +17,12 @@
     "dev": {
       "cache": false
     },
+    "dev:android": {
+      "cache": false
+    },
+    "dev:ios": {
+      "cache": false
+    },
     "clean": {
       "cache": false
     },

@@ -1,6 +1,6 @@
 {
   "functions": {
-    "source": "app/server",
+    "source": "apps/server",
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint",
       "npm --prefix \"$RESOURCE_DIR\" run build"
@@ -16,7 +16,7 @@
   "hosting": [
     {
       "target": "api",
-      "public": "app/server/static",
+      "public": "apps/server/static",
       "rewrites": [
         {
           "source": "**",

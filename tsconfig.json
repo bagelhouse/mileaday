@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
-    "outDir": "dist",
-    "strict": true,
-    "lib": ["esnext", "dom"],
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-  }
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "app/*": ["./packages/app/*"]
+    }
+  },
+  "extends": "expo/tsconfig.base"
 }
