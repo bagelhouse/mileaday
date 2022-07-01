@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import * as Linking from 'expo-linking'
+// @ts-ignore
 import { useMemo } from 'react'
 
 export function NavigationProvider({
