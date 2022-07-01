@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Provider>
+        {/* @ts-ignore */}
         <Component {...pageProps} />
       </Provider>
     </>

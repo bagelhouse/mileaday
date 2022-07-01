@@ -21,7 +21,11 @@
     "react-firebaseui": "^6.0.0"
   },
   "devDependencies": {
+    "@types/firebase": "^3.2.1",
+    "@types/next": "^9.0.0",
     "@types/node": "17.0.21",
+    "@types/raf": "^3.4.0",
+    "@types/react": "^18.0.14",
     "eslint-config-next": "^12.1.0",
     "next-compose-plugins": "^2.2.1",
     "next-transpile-modules": "^9.0.0"
