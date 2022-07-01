@@ -13,7 +13,6 @@ export const createNestServer = async (expressInstance: express.Express) => {
   return app.init()
 }
 createNestServer(server)
-  .then(v => console.log('Nest Ready', process.env))
+  .then(v => console.log('Nest Ready',))
   .catch(err => console.error('Nest broken', err))
 export const api: functions.HttpsFunction = functions.https.onRequest(server)
-

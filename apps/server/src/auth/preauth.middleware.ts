@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
 import * as firebase from 'firebase-admin';
-import config from '../firebase/firebase.config'
+import config from '../firebase/firebaseAdmin.config'
 
 const serviceAccount = config
 

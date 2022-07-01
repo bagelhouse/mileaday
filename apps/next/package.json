@@ -11,8 +11,14 @@
   "dependencies": {
     "@expo/next-adapter": "^3.1.20",
     "app": "*",
+    "firebase": "^9.8.4",
+    "firebase-admin": "^11.0.0",
+    "fs": "^0.0.1-security",
     "next": "12.1.0",
-    "raf": "^3.4.1"
+    "next-absolute-url": "^1.2.2",
+    "next-firebase-auth": "^1.0.0-canary.9",
+    "raf": "^3.4.1",
+    "react-firebaseui": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "17.0.21",

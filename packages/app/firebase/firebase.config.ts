@@ -1,7 +1,7 @@
 
 import * as dotenv from 'dotenv'
 import path from 'path'
-dotenv.config({path: path.resolve(__dirname, '../../../../.env')})
+dotenv.config({path: path.resolve(__dirname, '../../../.env')})
 const config = {
     type: process.env.FBSA_type,
     project_id: process.env.FBSA_project_id,

@@ -5,10 +5,15 @@
   "dependencies": {
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
+    "dotenv": "^16.0.1",
     "dripsy": "^3.6.0",
     "expo-linking": "^3.0.0",
+    "firebase": "^9.8.4",
     "moti": "canary",
     "solito": "latest"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/firebase": "^3.2.1"
+  }
 }

@@ -1,11 +1,26 @@
 .env
 
 ## server
+apps/server/firebase-debug.log
 apps/server/dist
 apps/server/.tubo
 apps/server/node_modules
-apps/expo/node_modules
+apps/server/.env
+apps/server/.env.local
+apps/server/.env.staging
+apps/server/.env.production
+
+# next app
 apps/next/node_modules
+apps/next/.env
+apps/next/.env.local
+apps/next/.env.staging
+apps/next/.env.production
+apps/next/.expo
+
+# mobile apps
+apps/expo/node_modules
+
 
 # OSX
 #
@@ -80,3 +95,5 @@ web-build/
 .turbo
 build/**
 
+apps/server/ui-debug.log
+.env

@@ -1,12 +1,21 @@
 {
   "projects": {
-    "default": "bagelhouse-mileaday"
+    "default": "bagelhouse-mileaday",
+    "staging": "bagelhouse-mileaday-staging",
+    "production": "bagelhouse-mileaday"
   },
   "targets": {
     "bagelhouse-mileaday": {
       "hosting": {
         "api": [
           "mileaday-api"
+        ]
+      }
+    },
+    "bagelhouse-mileaday-staging": {
+      "hosting": {
+        "api": [
+          "mileaday-api-staging"
         ]
       }
     }

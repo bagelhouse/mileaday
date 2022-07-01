@@ -8,6 +8,7 @@ export class AppController {
 
   @Get('/hello')
   getHello(@Req() request: Request): string {
+    console.log(request)
     return 'Hello ' + request['user']?.email + '!';
   }
 }

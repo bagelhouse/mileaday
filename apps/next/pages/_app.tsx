@@ -3,6 +3,9 @@ import Head from 'next/head'
 import React from 'react'
 import type { SolitoAppProps } from 'solito'
 import 'raf/polyfill'
+import '../firebase/firebaseInit.config'
+import initAuth from '../firebase/firebaseAuth' 
+initAuth()
 
 function MyApp({ Component, pageProps }: SolitoAppProps) {
   return (
