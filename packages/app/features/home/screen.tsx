@@ -4,8 +4,8 @@ import { MotiLink } from 'solito/moti'
 import { MotiView } from 'moti'
 
 interface HomePageState {
-  isAuthenticated: boolean,
-  userEmail: string
+  isAuthenticated?: boolean,
+  userEmail?: string
 }
 
 

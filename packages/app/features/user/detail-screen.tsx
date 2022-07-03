@@ -5,8 +5,8 @@ import { TextLink } from 'solito/link'
 const { useParam } = createParam<{ id: string }>()
 
 interface UserState {
-  isAuthenticated: boolean,
-  userEmail: string
+  isAuthenticated?: boolean,
+  userEmail?: string
 }
 
 export function UserDetailScreen(props: UserState) {

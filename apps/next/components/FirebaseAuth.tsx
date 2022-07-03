@@ -28,7 +28,6 @@ const firebaseAuthConfig: uiConfig.auth.Config = {
       false,
   },
   siteName: 'Mile a Day'
-  
 }
 
 const FirebaseAuth = () => {
