@@ -1,88 +1,71 @@
 import { Text, useSx, View, H1, P, Row, A } from 'dripsy'
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti'
-import { MotiView } from 'moti'
 
-interface HomePageState {
-  isAuthenticated?: boolean,
-  userEmail?: string
-}
-
-
-export function HomeScreen(props: HomePageState) {
+export function HomeScreen() {
   const sx = useSx()
 
   return (
     <View
-      sx={{ flex: 1, justifyContent: 'center', alignItems: 'center', p: 16, bg: `$background` }}
+      sx={{ flex: 1, justifyContent: 'center', alignItems: 'center', p: 16 }}
     >
-      <H1 sx={{ fontWeight: '800', color: 'white' }} >Mile a Day</H1>
+      <H1 sx={{ fontWeight: '800' }}>Welcome to Solito.</H1>
       <View sx={{ maxWidth: 600 }}>
-        <P sx={{ textAlign: 'center', color: 'white' }}>
-          Keep track of your run streak and more.
+        <P sx={{ textAlign: 'center' }}>
+          Here is a basic starter to show you how you can navigate from one
+          screen to another. This screen uses the same code on Next.js and React
+          Native.
         </P>
-        <P sx={{ textAlign: 'center', color: 'white' }}>
-          Coming soon.
+        <P sx={{ textAlign: 'center' }}>
+          Solito is made by{' '}
+          <A
+            href="https://twitter.com/fernandotherojo"
+            // @ts-expect-error react-native-web only types
+            hrefAttrs={{
+              target: '_blank',
+              rel: 'noreferrer',
+            }}
+            sx={{ color: 'blue' }}
+          >
+            Fernando Rojo
+          </A>
+          .
         </P>
       </View>
-
-        <View sx={{ alignItems: 'center', color: 'white' }} />
-        {props.isAuthenticated ? <>
-        <Row>
-          <MotiView from={{
-            translateY: 10,
+      <View sx={{ height: 32 }} />
+      <Row>
+        <TextLink
+          href="/user/fernando"
+          textProps={{
+            style: sx({ fontSize: 16, fontWeight: 'bold', color: 'blue' }),
           }}
-            animate={{
-              translateY: -7,
-            }}
-            transition={{
-              loop: true,
-              type: 'timing',
-              duration: 1200,
-              delay: 100,
-            }}>
-            <Text
-              selectable={false}
-              sx={{ fontSize: 16, color: 'white', fontWeight: 'bold', marginTop: 10 }}>
-              Nice! You&apos;re on the waiting list.
-            </Text>
-          </MotiView>
-          </Row>
-          <Row>
+        >
+          Regular Link
+        </TextLink>
+        <View sx={{ width: 32 }} />
+        <MotiLink
+          href="/user/fernando"
+          animate={({ hovered, pressed }) => {
+            'worklet'
+
+            return {
+              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+            }
+          }}
+          transition={{
+            type: 'timing',
+            duration: 150,
+          }}
+        >
           <Text
             selectable={false}
-            sx={{ fontSize: 16, color: 'white', fontWeight: 'bold', marginTop: 30 }}>
-            The email we have is {props.userEmail}
-          </Text>
-          </Row>
-        </>
-          : 
-          <Row>
-          <MotiLink
-            href="/auth"
-            animate={({ hovered, pressed }) => {
-              'worklet'
-
-              return {
-                scale: pressed ? 0.95 : hovered ? 1.5 : 1,
-                rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-              }
-            }}
-            transition={{
-              type: 'timing',
-              duration: 150,
-            }}
+            sx={{ fontSize: 16, color: 'black', fontWeight: 'bold' }}
           >
-            <Text
-              selectable={false}
-              sx={{ fontSize: 16, color: 'white', fontWeight: 'bold', marginTop: 10 }}
-            >
-              Sign up for the wait list!
-            </Text>
-          </MotiLink>
-        </Row>
-        }
-
+            Moti Link
+          </Text>
+        </MotiLink>
+      </Row>
     </View>
   )
 }

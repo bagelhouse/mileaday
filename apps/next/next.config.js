@@ -1,17 +1,7 @@
 /** @type {import('next').NextConfig} */
-console.log(process.env)
-
 const nextConfig = {
   reactStrictMode: true,
   webpack5: true,
-  // webpack: (config) => {
-  //   config.resolve.fallback = { 
-  //     fs: false,
-  //     path: false,
-  //     os: false
-  //   }
-  //   return config;
-  // }
 }
 
 const { withExpo } = require('@expo/next-adapter')
