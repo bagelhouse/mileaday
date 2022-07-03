@@ -12,8 +12,5 @@
     "moti": "canary",
     "solito": "latest"
   },
-  "sideEffects": false,
-  "devDependencies": {
-    "@types/firebase": "^3.2.1"
-  }
+  "sideEffects": false
 }

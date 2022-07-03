@@ -30,6 +30,8 @@ const Header = ({ email, signOut }) => (
       <div>v{nfaDependencyVersion}</div>
       <div>Next.js v{nextDependencyVersion}</div>
       <div>Firebase v{firebaseDependencyVersion}</div>
+      <div>iOS v14.5</div>
+      <div>Android v12</div>
     </div>
     {email ? (
       <>

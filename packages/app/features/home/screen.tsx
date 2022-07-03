@@ -2,6 +2,7 @@ import { Text, useSx, View, H1, P, Row, A } from 'dripsy'
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti'
 
+
 export function HomeScreen() {
   const sx = useSx()
 
@@ -32,19 +33,10 @@ export function HomeScreen() {
           .
         </P>
       </View>
-      <View sx={{ height: 32 }} />
       <Row>
-        <TextLink
-          href="/user/fernando"
-          textProps={{
-            style: sx({ fontSize: 16, fontWeight: 'bold', color: 'blue' }),
-          }}
-        >
-          Regular Link
-        </TextLink>
         <View sx={{ width: 32 }} />
         <MotiLink
-          href="/user/fernando"
+          href="/auth"
           animate={({ hovered, pressed }) => {
             'worklet'
 
