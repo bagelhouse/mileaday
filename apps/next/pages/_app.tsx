@@ -32,13 +32,13 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
       <Head>
         <title>Mile a Day</title>
         <meta
-          name="description"
-          content="Expo + Next.js with Solito. By Fernando Rojo."
+          name="A running community"
+          content=""
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Provider>
-        <Header email={AuthUser.email} signOut={AuthUser.signOut} />
+        {/* <Header email={AuthUser.email} signOut={AuthUser.signOut} /> */}
         <Component {...pageProps} />
       </Provider>
     </>

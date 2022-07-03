@@ -5,31 +5,35 @@ import {
   AuthAction,
 } from 'next-firebase-auth'
 import FirebaseAuth from '../components/FirebaseAuth'
-
+import { Text, useSx, View, H1, P, Row, A } from 'dripsy'
 const styles = {
   content: {
     padding: `8px 32px`,
+    backgroundColor: '#000',
   },
   textContainer: {
+    backgroundColor: '#000',
+    color: '#fff',
     display: 'flex',
     justifyContent: 'center',
     margin: 16,
   },
 }
 
-const Auth = () => (
-  <div style={styles.content}>
-    <h3>Sign in</h3>
-    <div style={styles.textContainer}>
-      <p>
-        This auth page is <b>not</b> static. It will server-side redirect to the
-        app if the user is already authenticated.
-      </p>
-    </div>
-    <div>
-      <FirebaseAuth />
-    </div>
-  </div>
+const Auth = () => (<>
+  <View sx={{ flex: 1, justifyContent: 'center', alignItems: 'center', p: 16, bg: `$background` }}>
+    <Text sx ={{marginBottom: 15}}>
+      <P sx={{ color: 'white' }}>
+        You will be emailed when we are in beta.
+      </P>
+    </Text>
+    <Row sx={{  bg: `$background` }}>
+    <FirebaseAuth />
+    </Row>
+  </View>
+
+</>
+
 )
 
 export const getServerSideProps = withAuthUserTokenSSR({

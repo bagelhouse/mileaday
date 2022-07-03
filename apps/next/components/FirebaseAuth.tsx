@@ -1,13 +1,14 @@
 /* globals window */
 import React, { useEffect, useState } from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import uiConfig from 'firebaseui'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 
 // Note that next-firebase-auth inits Firebase for us,
 // so we don't need to.
 
-const firebaseAuthConfig = {
+const firebaseAuthConfig: uiConfig.auth.Config = {
   signInFlow: 'popup',
   // Auth providers
   // https://github.com/firebase/firebaseui-web#configure-oauth-providers
@@ -26,6 +27,8 @@ const firebaseAuthConfig = {
       // `next-firebase-auth`.
       false,
   },
+  siteName: 'Mile a Day'
+  
 }
 
 const FirebaseAuth = () => {

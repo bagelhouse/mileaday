@@ -14,38 +14,50 @@ export function HomeScreen(props: HomePageState) {
 
   return (
     <View
-      sx={{ flex: 1, justifyContent: 'center', alignItems: 'center', p: 16 }}
+      sx={{ flex: 1, justifyContent: 'center', alignItems: 'center', p: 16, bg: `$background` }}
     >
-      <H1 sx={{ fontWeight: '800' }}>Mile a Day</H1>
+      <H1 sx={{ fontWeight: '800', color: 'white' }} >Mile a Day</H1>
       <View sx={{ maxWidth: 600 }}>
-        <P sx={{ textAlign: 'center' }}>
+        <P sx={{ textAlign: 'center', color: 'white' }}>
           Keep track of your run streak and more.
         </P>
-        <P sx={{ textAlign: 'center' }}>
+        <P sx={{ textAlign: 'center', color: 'white' }}>
           Coming soon.
         </P>
       </View>
-      <Row>
-        <View sx={{ alignItems: 'center' }} />
-        {props.isAuthenticated ?
+
+        <View sx={{ alignItems: 'center', color: 'white' }} />
+        {props.isAuthenticated ? <>
+        <Row>
           <MotiView from={{
-            translateX: -105,
+            translateY: 10,
           }}
             animate={{
-              translateX: 0,
+              translateY: -7,
             }}
             transition={{
               loop: true,
               type: 'timing',
-              duration: 1500,
+              duration: 1200,
               delay: 100,
             }}>
             <Text
               selectable={false}
-              sx={{ fontSize: 16, color: 'black', fontWeight: 'bold' }}>
+              sx={{ fontSize: 16, color: 'white', fontWeight: 'bold', marginTop: 10 }}>
               Nice! You&apos;re on the waiting list.
             </Text>
-          </MotiView> :
+          </MotiView>
+          </Row>
+          <Row>
+          <Text
+            selectable={false}
+            sx={{ fontSize: 16, color: 'white', fontWeight: 'bold', marginTop: 30 }}>
+            The email we have is {props.userEmail}
+          </Text>
+          </Row>
+        </>
+          : 
+          <Row>
           <MotiLink
             href="/auth"
             animate={({ hovered, pressed }) => {
@@ -63,13 +75,14 @@ export function HomeScreen(props: HomePageState) {
           >
             <Text
               selectable={false}
-              sx={{ fontSize: 16, color: 'black', fontWeight: 'bold' }}
+              sx={{ fontSize: 16, color: 'white', fontWeight: 'bold', marginTop: 10 }}
             >
               Sign up for the wait list!
             </Text>
           </MotiLink>
+        </Row>
         }
-      </Row>
+
     </View>
   )
 }
