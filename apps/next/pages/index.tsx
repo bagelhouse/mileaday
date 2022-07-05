@@ -27,8 +27,6 @@ const Home = () => {
 
     useEffect(() => {
       async function logToken(user: AuthUserContext) {
-          console.log(await user.getIdToken())
-          console.log('angelo ', uid)
         }
       
        logToken(AuthUser)

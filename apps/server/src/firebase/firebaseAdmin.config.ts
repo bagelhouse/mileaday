@@ -1,21 +1,33 @@
 import * as dotenv from 'dotenv'
 import path from 'path'
+import * as firebase from 'firebase-admin'
+import { Logger } from '@nestjs/common'
 
 if (process.env.FUNCTIONS_EMULATOR === 'true') {
   dotenv.config({path: path.resolve(__dirname, '../../.env.local')})
 }
 
-const config = {
-  auth_provider_x509_cert_url: process.env.SERVER_FIREBASE_ADMIN_AUTH_PROVIDER_CERT_URL,
-  auth_uri: process.env.SERVER_FIREBASE_ADMIN_AUTH_URI,
-  client_email: process.env.SERVER_FIREBASE_ADMIN_CLIENT_EMAIL,
-  client_id: process.env.SERVER_FIREBASE_ADMIN_CLIENT_ID,
-  client_x509_cert_url: process.env.SERVER_FIREBASE_ADMIN_CLIENT_CERT_URL,
-  private_key: process.env.SERVER_FIREBASE_ADMIN_PRIVATE_KEY,
-  private_key_id: process.env.SERVER_FIREBASE_ADMIN_PRIVATE_KEY_ID,
-  project_id: process.env.SERVER_FIREBASE_ADMIN_PROJECT_ID,
-  token_uri: process.env.SERVER_FIREBASE_ADMIN_TOKEN_URI,
-  type: process.env.SERVER_FIREBASE_ADMIN_TYPE,
+export const firebaseAdminApp = () => {
+  if (firebase) {
+    console.log('App already instantiated')
+    return firebase
   }
-
-export default config
+  const adminConfig = {
+    authProviderX509CertUrl: process.env.SERVER_FIREBASE_ADMIN_AUTH_PROVIDER_CERT_URL,
+    authUri: process.env.SERVER_FIREBASE_ADMIN_AUTH_URI,
+    clientEmail: process.env.SERVER_FIREBASE_ADMIN_CLIENT_EMAIL,
+    clientId: process.env.SERVER_FIREBASE_ADMIN_CLIENT_ID,
+    clientC509CertUrl: process.env.SERVER_FIREBASE_ADMIN_CLIENT_CERT_URL,
+    privateKey: process.env.SERVER_FIREBASE_ADMIN_PRIVATE_KEY,
+    privateKeyId: process.env.SERVER_FIREBASE_ADMIN_PRIVATE_KEY_ID,
+    projectId: process.env.SERVER_FIREBASE_ADMIN_PROJECT_ID,
+    tokenUri: process.env.SERVER_FIREBASE_ADMIN_TOKEN_URI,
+    type: process.env.SERVER_FIREBASE_ADMIN_TYPE,
+  }
+  firebase.initializeApp({
+    credential: firebase.credential.cert(adminConfig)
+  })
+  Logger.log('Firebase admin Instantiated')
+  console.log('instantied')
+  return firebase
+}

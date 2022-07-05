@@ -1,0 +1,10 @@
+{
+    "version": "0.0.1",
+    "name": "firebase-adapter",
+    "main": "index.ts",
+    "dependencies": {
+
+    },
+    "sideEffects": false
+  }
+  

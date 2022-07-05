@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "bagelhouse-mileaday",
+    "default": "bagelhouse-mileaday-staging",
     "staging": "bagelhouse-mileaday-staging",
     "production": "bagelhouse-mileaday"
   },
