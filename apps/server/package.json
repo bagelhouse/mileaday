@@ -18,7 +18,9 @@
     "serve": "firebase emulators:start",
     "shell": "yarn run build && firebase functions:shell",
     "start": "yarn run shell",
-    "deploy": "firebase deploy --only functions"
+    "deploy": "firebase deploy --only functions",
+    "test:unit": "jest unit",
+    "test:int": "jest int"
   },
   "main": "dist/src/index.js",
   "dependencies": {
@@ -43,14 +45,17 @@
     "@types/express": "^4.17.13",
     "@types/hbs": "^4.0.1",
     "@types/jest": "^28.1.4",
+    "axios": "^0.27.2",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.25.4",
     "firebase-functions-test": "^0.2.0",
     "firebase-tools": "^11.1.0",
     "jest": "^28.1.2",
+    "jest-junit": "^14.0.0",
     "jest-mock": "^28.1.1",
     "source-map-support": "^0.5.20",
     "supertest": "^6.2.4",
+    "ts-jest": "^28.0.5",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.10.1",

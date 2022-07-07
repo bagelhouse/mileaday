@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="1" failures="0" errors="0" time="7.479">
+  <testsuite name="tests token" errors="0" failures="0" skipped="0" timestamp="2022-07-06T23:53:40" time="7.413" tests="1">
+    <testcase classname="tests token should get token" name="tests token should get token" time="3.31">
+    </testcase>
+  </testsuite>
+</testsuites>

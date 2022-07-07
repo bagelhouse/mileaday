@@ -1,15 +1,10 @@
 import * as dotenv from 'dotenv'
 import path from 'path'
 import * as firebase from 'firebase-admin'
-import { Logger } from '@nestjs/common'
 
+dotenv.config({path: path.resolve(__dirname, '../../.env.local')})
 
 export const firebaseAdminApp = () => {
-  if (process.env.FUNCTIONS_EMULATOR === 'true') {
-    dotenv.config({path: path.resolve(__dirname, '../../../.env.local')})
-  }
-  if (firebase.apps.length > 0) 
-    return firebase
   const adminConfig = {
     authProviderX509CertUrl: process.env.SERVER_FIREBASE_ADMIN_AUTH_PROVIDER_CERT_URL,
     authUri: process.env.SERVER_FIREBASE_ADMIN_AUTH_URI,
