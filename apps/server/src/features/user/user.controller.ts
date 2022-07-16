@@ -1,12 +1,14 @@
-import { Get, Req, Post, Body, Put, Delete, Param, Controller, UsePipes } from '@nestjs/common'
+import { Get, Req, Post, Body, Controller } from '@nestjs/common'
 import { Request } from 'express'
 import { UserRecord } from 'firebase-admin/lib/auth/user-record'
 import { UserService } from './user.service'
-import { HttpException, HttpCode } from '@nestjs/common'
-import { DecodedTokenResponse, UserDoc, UsernameDoc } from './user.types'
+import { HttpException } from '@nestjs/common'
+import { DecodedTokenResponse, StravaUserDoc, UserDoc, UsernameDoc } from './user.types'
 import { strictVerifyAllParams } from './user.utils'
-import { CreateUser } from './models.dto'
-
+import { 
+  CreateUser, 
+  CreateStravaUser } from './models.dto'
+import * as firebase from 'firebase-admin'
 @Controller()
 export class UserController {
 
@@ -24,23 +26,56 @@ export class UserController {
   async createUser(
     @Body() params: CreateUser,
     @Req() request: Request & DecodedTokenResponse
-  ): Promise< any > {
+  ): Promise< firebase.firestore.WriteResult[] | HttpException > {
     const userDoc: UserDoc = {
-      username: params.userName,
+      userName: params.userName,
       uid: request.user.uid,
       displayName: params.displayName,
-      photoURL: params.photoURL
+      photoURL: params.photoURL,
+      usesStravaService: params.usesStravaService,
+      stravaAthleteId: params.stravaAthleteId ? params.stravaAthleteId : undefined
     }
     const usernameDoc: UsernameDoc = {
-      username: params.userName,
+      userName: params.userName,
       uid: request.user.uid
     }
     const hasRequiredParams = strictVerifyAllParams({...userDoc, ...usernameDoc})
     // ensure that the uid is correctly passed with other params
     if (hasRequiredParams !== true)
-      throw new HttpException({[hasRequiredParams.toString()]: 'not found in request'}, 401)
-    return await this.userService.createUser(userDoc, usernameDoc)
+      throw new HttpException({[hasRequiredParams.toString()]: 'not found in request'}, 400)
+    try { 
+      return await this.userService.createUser(userDoc, usernameDoc)
+    }
+    catch (e) {
+      console.log(e)
+      return new HttpException({user: 'could not create user', msg: `${e}`}, 400)
+    }
   }
+
+  @Post('/user/create-strava-user')
+  async createStravaUser(
+    @Body() params: CreateStravaUser,
+    @Req() request: Request & DecodedTokenResponse
+  ): Promise <  firebase.firestore.WriteResult | HttpException > {
+    const stravaUserDoc: StravaUserDoc = {
+      athleteId: params.athleteId,
+      uid: request.user.uid,
+      scope: params.scope,
+      accessToken: params.accessToken,
+      refreshToken: params.refreshToken,
+      expiresAt: params.expiresAt
+    }
+    try { 
+      return await this.userService.createStravaUser(stravaUserDoc)
+    }
+    catch (e) {
+      console.log(e)
+      return new HttpException({user: 'could not create user', msg: `${e}`}, 400)
+    } 
+  }
+  
+
+  
   
 
 }
