@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" errors="0" time="7.479">
-  <testsuite name="tests token" errors="0" failures="0" skipped="0" timestamp="2022-07-06T23:53:40" time="7.413" tests="1">
-    <testcase classname="tests token should get token" name="tests token should get token" time="3.31">
+<testsuites name="jest tests" tests="2" failures="2" errors="0" time="17">
+  <testsuite name="Features/User/Middleware" errors="0" failures="1" skipped="0" timestamp="2022-07-16T15:41:08" time="11.39" tests="1">
+    <testcase classname="Features/User/Middleware use - should decode token" name="Features/User/Middleware use - should decode token" time="5.001">
+      <failure>Error: thrown: &quot;Exceeded timeout of 5000 ms for a test.
+Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test.&quot;
+    at /Users/angelo/developer/bagelhouse/mileaday/apps/server/test/integration/features/user/auth.middleware.int.test.ts:11:3
+    at _dispatchDescribe (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-circus/build/index.js:105:26)
+    at describe (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-circus/build/index.js:60:5)
+    at Object.&lt;anonymous&gt; (/Users/angelo/developer/bagelhouse/mileaday/apps/server/test/integration/features/user/auth.middleware.int.test.ts:5:1)
+    at Runtime._execModule (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-runtime/build/index.js:1714:24)
+    at Runtime._loadModule (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-runtime/build/index.js:1223:12)
+    at Runtime.requireModule (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-runtime/build/index.js:1047:12)
+    at jestAdapter (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:89:13)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+    at runTestInternal (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-runner/build/runTest.js:411:16)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="tests token" errors="0" failures="1" skipped="0" timestamp="2022-07-16T15:41:08" time="16.116" tests="1">
+    <testcase classname="tests token should get token" name="tests token should get token" time="10.001">
+      <failure>Error: thrown: &quot;Exceeded timeout of 10000 ms for a test.
+Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test.&quot;
+    at /Users/angelo/developer/bagelhouse/mileaday/apps/server/test/integration/features/user/user.int.test.ts:6:3
+    at _dispatchDescribe (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-circus/build/index.js:105:26)
+    at describe (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-circus/build/index.js:60:5)
+    at Object.&lt;anonymous&gt; (/Users/angelo/developer/bagelhouse/mileaday/apps/server/test/integration/features/user/user.int.test.ts:4:1)
+    at Runtime._execModule (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-runtime/build/index.js:1714:24)
+    at Runtime._loadModule (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-runtime/build/index.js:1223:12)
+    at Runtime.requireModule (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-runtime/build/index.js:1047:12)
+    at jestAdapter (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:89:13)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+    at runTestInternal (/Users/angelo/developer/bagelhouse/mileaday/node_modules/jest-runner/build/runTest.js:411:16)</failure>
     </testcase>
   </testsuite>
 </testsuites>

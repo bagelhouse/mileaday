@@ -17,8 +17,10 @@ export const firebaseAdminApp = () => {
     tokenUri: process.env.SERVER_FIREBASE_ADMIN_TOKEN_URI,
     type: process.env.SERVER_FIREBASE_ADMIN_TYPE,
   }
-  firebase.initializeApp({
-    credential: firebase.credential.cert(adminConfig)
-  })
+  if (firebase.apps.length === 0)
+    firebase.initializeApp({
+      credential: firebase.credential.cert(adminConfig)
+    })
   return firebase
 }
+

@@ -14,4 +14,5 @@ export const firebaseAuthConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 }
 
-firebase.initializeApp(firebaseAuthConfig)
+if (firebase.apps.length === 0)
+  firebase.initializeApp(firebaseAuthConfig)

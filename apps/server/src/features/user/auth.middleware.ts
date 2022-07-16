@@ -1,13 +1,10 @@
 import { Injectable, NestMiddleware } from '@nestjs/common'
 import { Request, Response } from 'express'
-import * as firebase from 'firebase-admin'
 import { firebaseAdminApp } from '../../firebase/firebaseAdmin.config'
 
 @Injectable()
 export class FirebasePreauthMiddleware implements NestMiddleware {
-
     private defaultApp: any
-
     constructor() {
         this.defaultApp = firebaseAdminApp()
     }
@@ -17,17 +14,14 @@ export class FirebasePreauthMiddleware implements NestMiddleware {
         if (token != null && token != '') {
             this.defaultApp.auth().verifyIdToken(token.replace('Bearer ', ''))
                 .then(async decodedToken => {
-                    const user = {
-                        email: decodedToken.email
-                    }
-                    req['user'] = user
+                    req['user'] = decodedToken 
                     next()
                 }).catch(error => {
-                    console.error(error)
+                    // console.error(error)
                     this.accessDenied(req.url, res)
                 })
         } else {
-            next()
+            next() // we will catch no information errors in the controller 
         }
     }
 

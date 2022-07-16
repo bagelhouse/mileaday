@@ -29,5 +29,7 @@ module.exports = {
       outputName: 'integrationTestReport'
     }]
   ],
-  setupFiles: ['<rootDir>/test/harnesses/firebaseAdminHarness.ts'],
+  setupFiles: [
+    '<rootDir>/test/harnesses/firebaseAdminHarness.ts',
+  ],
 };
