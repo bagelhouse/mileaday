@@ -16,10 +16,10 @@ export class UserController {
 
   @Get('/user/user-record')
   async getUserRecord(@Req() request: Request & DecodedTokenResponse): Promise<UserRecord | HttpException> {
-    const userEmail = request.user.email
-    if (!userEmail)
+    const userObj = request.user
+    if (!userObj)
       throw new HttpException({email: 'not found in request'}, 401) 
-    return await this.userService.getUserByEmail(userEmail)
+    return await this.userService.getUserByEmail(userObj.email)
   }
 
   @Post('/user/create-user')
