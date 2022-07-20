@@ -4,6 +4,7 @@ import firebase from 'firebase/compat/app'
 import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 import { HttpStatus } from '@nestjs/common'
+import { FB_COLLECTION_USERS, FB_COLLECTION_USERNAMES, FB_COLLECTION_STRAVA_ATHLETES } from 'src/features/user/constants'
 
 type HarnessParams = {
   userEmail: string
@@ -50,6 +51,12 @@ export class FirebaseUserHarness {
     this.userCredential = await this.firebaseClientApp.auth().signInWithCustomToken(this.customToken)
     this.userIdToken = await this.firebaseClientApp.auth().currentUser.getIdToken()
     return {status: HttpStatus.OK}
+  }
+
+  async deleteUserIfExists(userName: string): Promise<admin.firestore.WriteResult[]> {
+    const userDoc = this.firebaseAdminApp.firestore().doc(`${FB_COLLECTION_USERS}/${this.getUserRecord().uid}`)
+    const usernameDoc = this.firebaseAdminApp.firestore().doc(`${FB_COLLECTION_USERNAMES}/${userName}`)
+    return [await userDoc.delete(), await usernameDoc.delete()]
   }
 
   getUserCredential(): firebase.auth.UserCredential {

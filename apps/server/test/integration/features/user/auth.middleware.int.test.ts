@@ -1,5 +1,5 @@
-import { FirebasePreauthMiddleware } from '../../../../src/features/user/auth.middleware'
-import { FirebaseUserHarness } from '../../../harnesses/firebaseUserHarness'
+import { FirebasePreauthMiddleware } from 'src/features/user/auth.middleware'
+import { FirebaseUserHarness } from 'test/harnesses/firebaseUserHarness'
 import {
   Controller,
   Get,
@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest';
-import { UserModule } from '../../../../src/features/user/user.module'
+import { UserModule } from 'src/features/user/user.module'
 import axios from 'axios'
 
 const RETURN_VALUE = 'user'

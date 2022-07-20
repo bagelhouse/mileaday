@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="5" failures="0" errors="0" time="5.223">
-  <testsuite name="tests token" errors="0" failures="0" skipped="0" timestamp="2022-07-20T01:17:27" time="3.15" tests="1">
-    <testcase classname="tests token should get token" name="tests token should get token" time="1.479">
+<testsuites name="jest tests" tests="5" failures="0" errors="0" time="4.304">
+  <testsuite name="User - FirebasePreauthMiddleware" errors="0" failures="0" skipped="0" timestamp="2022-07-20T02:23:41" time="3.537" tests="4">
+    <testcase classname="User - FirebasePreauthMiddleware forRoutes(user/*)" name="User - FirebasePreauthMiddleware forRoutes(user/*)" time="0.488">
+    </testcase>
+    <testcase classname="User - FirebasePreauthMiddleware forRoutes(TestController)" name="User - FirebasePreauthMiddleware forRoutes(TestController)" time="0.217">
+    </testcase>
+    <testcase classname="User - FirebasePreauthMiddleware - E2E tests basic auth" name="User - FirebasePreauthMiddleware - E2E tests basic auth" time="0.867">
+    </testcase>
+    <testcase classname="User - FirebasePreauthMiddleware - E2E should reject" name="User - FirebasePreauthMiddleware - E2E should reject" time="0.206">
     </testcase>
   </testsuite>
-  <testsuite name="User - FirebasePreauthMiddleware" errors="0" failures="0" skipped="0" timestamp="2022-07-20T01:17:27" time="5.075" tests="4">
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(user/*)" name="User - FirebasePreauthMiddleware forRoutes(user/*)" time="0.765">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(TestController)" name="User - FirebasePreauthMiddleware forRoutes(TestController)" time="0.965">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E tests basic auth" name="User - FirebasePreauthMiddleware - E2E tests basic auth" time="1.101">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E should reject" name="User - FirebasePreauthMiddleware - E2E should reject" time="0.301">
+  <testsuite name="User - /create-user" errors="0" failures="0" skipped="0" timestamp="2022-07-20T02:23:41" time="3.643" tests="1">
+    <testcase classname="User - /create-user should create user" name="User - /create-user should create user" time="1.908">
     </testcase>
   </testsuite>
 </testsuites>
