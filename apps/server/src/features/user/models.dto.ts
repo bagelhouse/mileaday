@@ -16,7 +16,6 @@ export class CreateUser {
   usesStravaService: boolean
 
   stravaAthleteId: string
-
  }
  
  export class CreateStravaUser {
@@ -35,5 +34,4 @@ export class CreateUser {
 
   @IsNotEmpty()
   expiresAt: string
-
  }
