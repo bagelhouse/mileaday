@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="5" failures="0" errors="0" time="4.304">
-  <testsuite name="User - FirebasePreauthMiddleware" errors="0" failures="0" skipped="0" timestamp="2022-07-20T02:23:41" time="3.537" tests="4">
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(user/*)" name="User - FirebasePreauthMiddleware forRoutes(user/*)" time="0.488">
+<testsuites name="jest tests" tests="6" failures="0" errors="0" time="6.185">
+  <testsuite name="User - /create-user" errors="0" failures="0" skipped="0" timestamp="2022-07-21T01:47:24" time="4.376" tests="2">
+    <testcase classname="User - /create-user should create user" name="User - /create-user should create user" time="2.077">
     </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(TestController)" name="User - FirebasePreauthMiddleware forRoutes(TestController)" time="0.217">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E tests basic auth" name="User - FirebasePreauthMiddleware - E2E tests basic auth" time="0.867">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E should reject" name="User - FirebasePreauthMiddleware - E2E should reject" time="0.206">
+    <testcase classname="User - /create-strava-user should create user" name="User - /create-strava-user should create user" time="0.552">
     </testcase>
   </testsuite>
-  <testsuite name="User - /create-user" errors="0" failures="0" skipped="0" timestamp="2022-07-20T02:23:41" time="3.643" tests="1">
-    <testcase classname="User - /create-user should create user" name="User - /create-user should create user" time="1.908">
+  <testsuite name="User - FirebasePreauthMiddleware" errors="0" failures="0" skipped="0" timestamp="2022-07-21T01:47:28" time="1.78" tests="4">
+    <testcase classname="User - FirebasePreauthMiddleware forRoutes(user/*)" name="User - FirebasePreauthMiddleware forRoutes(user/*)" time="0.389">
+    </testcase>
+    <testcase classname="User - FirebasePreauthMiddleware forRoutes(TestController)" name="User - FirebasePreauthMiddleware forRoutes(TestController)" time="0.267">
+    </testcase>
+    <testcase classname="User - FirebasePreauthMiddleware - E2E tests basic auth" name="User - FirebasePreauthMiddleware - E2E tests basic auth" time="0.412">
+    </testcase>
+    <testcase classname="User - FirebasePreauthMiddleware - E2E should reject" name="User - FirebasePreauthMiddleware - E2E should reject" time="0.275">
     </testcase>
   </testsuite>
 </testsuites>

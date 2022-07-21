@@ -20,7 +20,7 @@
     "start": "yarn run shell",
     "deploy": "firebase deploy --only functions",
     "test:unit": "jest unit",
-    "test:int": "jest int"
+    "test:int": "jest int --detectOpenHandles"
   },
   "main": "dist/src/index.js",
   "dependencies": {

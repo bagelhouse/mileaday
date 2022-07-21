@@ -58,6 +58,10 @@ export class FirebaseUserHarness {
     const usernameDoc = this.firebaseAdminApp.firestore().doc(`${FB_COLLECTION_USERNAMES}/${userName}`)
     return [await userDoc.delete(), await usernameDoc.delete()]
   }
+  async deleteStravaUserIfExists(athleteId: string): Promise<admin.firestore.WriteResult> {
+    const stravaUserDoc = this.firebaseAdminApp.firestore().doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${athleteId}`)
+    return await stravaUserDoc.delete()
+  }
 
   getUserCredential(): firebase.auth.UserCredential {
     return this.userCredential

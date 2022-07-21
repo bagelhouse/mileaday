@@ -34,6 +34,6 @@ export class CreateUser {
   refreshToken: string
 
   @IsNotEmpty()
-  expiresAt: Date
+  expiresAt: string
 
  }
