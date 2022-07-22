@@ -3,15 +3,16 @@ import { CreateStravaUser, CreateUser } from 'src/features/user/models.dto'
 import { FB_COLLECTION_STRAVA_ATHLETES, FB_COLLECTION_USERS } from 'src/features/user/constants'
 import firebase from 'firebase-admin'
 import axios from 'axios'
+import { TEST_USER_USERNAME } from 'test/constants'
 
 describe('User - /create-user', function() {
   jest.setTimeout(100000)
   it('should create user', async function () {
     const userHarness = new FirebaseUserHarness({userEmail: 'team@bagelhouse.co', userPassword: 'somepass'})
     await userHarness.init()
-    await userHarness.deleteUserIfExists('bagelhouseuser')
+    await userHarness.deleteUserIfExists(TEST_USER_USERNAME)
     const userParams: CreateUser = {
-      userName: 'bagelhouseuser',
+      userName: TEST_USER_USERNAME,
       usesStravaService: true,
       photoURL: 'some url',
       stravaAthleteId: '49028134',

@@ -1,8 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
-import { HttpException } from '@nestjs/common/exceptions/http.exception';
-import { HttpStatus } from '@nestjs/common';
-
 import * as firebase from 'firebase-admin'
 import { StravaUserDoc, UserDoc, UsernameDoc } from './user.types'
 import { 
@@ -20,9 +16,26 @@ export class UserService {
     this.firebaseApp = firebase
   }
 
-  async getUserByEmail(email: string) {
-    const user = await this.firebaseApp.auth().getUserByEmail(email)
-    return user
+  async getUserRecordByEmail(email: string) {
+    return await this.firebaseApp.auth().getUserByEmail(email)
+  }
+
+  async getUserUIDByUserName(userName: string): Promise<firebase.firestore.DocumentData> {
+    const firestore = this.firebaseApp.firestore()
+    const usernameDoc = firestore.doc(`${FB_COLLECTION_USERNAMES}/${userName}`)
+    return (await usernameDoc.get()).data()
+  }
+  
+  async getUserByUID(uid: string): Promise<UserDoc> {
+    const firestore = this.firebaseApp.firestore()
+    const usernameDoc = firestore.doc(`${FB_COLLECTION_USERS}/${uid}`)
+    return (await usernameDoc.get()).data() as UserDoc
+  }
+
+  async getStravaUserByAthleteId(athleteId: string): Promise<StravaUserDoc> {
+    const firestore = this.firebaseApp.firestore()
+    const usernameDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${athleteId}`)
+    return (await usernameDoc.get()).data() as StravaUserDoc
   }
 
   async createUser(

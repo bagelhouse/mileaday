@@ -19,8 +19,11 @@ export class UserController {
     const userObj = request.user
     if (!userObj)
       throw new HttpException({email: 'not found in request'}, 401) 
-    return await this.userService.getUserByEmail(userObj.email)
+    return await this.userService.getUserRecordByEmail(userObj.email)
   }
+
+  @Get('/user/get-user')
+  
 
   @Post('/user/create-user')
   async createUser(
