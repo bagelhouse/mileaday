@@ -1,9 +1,9 @@
 import _ from 'lodash'
-export function toString(o) {
+export function objectToString(o) {
   if (!_.isEmpty(o)) {
     Object.keys(o).forEach(k => {
       if (typeof o[k] === 'object') {
-        return toString(o[k])
+        return objectToString(o[k])
       }
       const key = o[k]
       if (!_.isEmpty(key))

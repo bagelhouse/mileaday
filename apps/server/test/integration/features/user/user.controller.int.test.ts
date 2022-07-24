@@ -6,7 +6,7 @@ import { FB_COLLECTION_STRAVA_ATHLETES } from 'src/features/strava/constants'
 import firebase from 'firebase-admin'
 import axios from 'axios'
 import { TEST_USER_USERNAME } from 'test/constants'
-import { toString } from 'test/utils'
+import { objectToString } from 'src/utils/common'
 
 describe('User - /create-user', function() {
   jest.setTimeout(100000)
@@ -48,6 +48,6 @@ describe('User - /create-strava-user', function() {
     })
     expect(dbWrite.data).toMatchObject({"_writeTime": {}})
     const test = await firebase.firestore().collection(`${FB_COLLECTION_STRAVA_ATHLETES}`).where("uid", "==", userHarness.getUserRecord().uid).get() 
-    expect(test.docs[0].data()).toMatchObject(toString(stravaUserParams))
+    expect(test.docs[0].data()).toMatchObject(objectToString(stravaUserParams))
   })
 })

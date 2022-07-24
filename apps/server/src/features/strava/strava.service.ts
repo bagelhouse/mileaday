@@ -4,6 +4,7 @@ import { StravaAthleteResponse, StravaRefreshTokenResponse, StravaUserDoc } from
 import { FB_COLLECTION_STRAVA_ATHLETES } from './constants'
 import * as firebase from 'firebase-admin'
 import { StravaAppConfig } from './strava.config'
+import { shouldRefreshToken } from './strava.utils'
 
 @Injectable()
 export class StravaService {
@@ -31,6 +32,28 @@ export class StravaService {
     return await this.strava.oauth.refreshToken(refresh_token)
   }
 
+  async setNewAccessToken(tokenResponse: StravaRefreshTokenResponse): Promise<firebase.firestore.WriteResult> {
+    const firestore = this.firebaseApp.firestore()
+    const stravaUserDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${this.athleteId}`)
+    return await stravaUserDoc.update(tokenResponse)
+  }
+
+  async setNewAccessTokenMaybe(): Promise<firebase.firestore.WriteResult | undefined> {
+    const context = this.stravaUserContext
+    const now = Date.now()
+    if (!context.access_token || !context.refresh_token || !context.expires_at)
+      throw new Error(`Error: user missing required properties - ${JSON.stringify({
+        access_token: !context.access_token,
+        refresh_token: !context.refresh_token,
+        expires_at: !context.expires_at
+      })}`)
+    if (shouldRefreshToken(now, context.expires_at)) {
+      const newTokens = await this.getNewAccessToken(context.refresh_token)
+      return await this.setNewAccessToken(newTokens)
+    }
+    else return undefined
+  }
+
   async getStravaUserByAthleteId(athleteId: string): Promise<StravaUserDoc> {
     const firestore = this.firebaseApp.firestore()
     const usernameDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${athleteId}`)
@@ -46,7 +69,7 @@ export class StravaService {
       return await stravaUserDoc.create(stravaUserDocParams)
     }
     catch (e) {
-      throw Error(`Error: creating strava user - ${JSON.stringify(e)}`)
+      throw new Error(`Error: creating strava user - ${JSON.stringify(e)}`)
     }
   }
 }
