@@ -3,16 +3,19 @@ import { Request } from 'express'
 import { UserRecord } from 'firebase-admin/lib/auth/user-record'
 import { UserService } from './user.service'
 import { HttpException } from '@nestjs/common'
-import { DecodedTokenResponse, StravaUserDoc, UserDoc, UsernameDoc } from './user.types'
+import { DecodedTokenResponse, UserDoc, UsernameDoc } from './user.types'
 import { strictVerifyAllParams } from './user.utils'
 import { 
-  CreateUser, 
-  CreateStravaUser } from './models.dto'
+  CreateUser } from './models.dto'
 import * as firebase from 'firebase-admin'
+import { StravaService } from '../strava/strava.service'
+import { CreateStravaUser } from 'src/features/strava/models.dto'
+import { StravaUserDoc } from '../strava/strava.types'
+
 @Controller()
 export class UserController {
 
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private readonly StravaService: StravaService) {}
 
   @Get('/user/user-record')
   async getUserRecord(@Req() request: Request & DecodedTokenResponse): Promise<UserRecord | HttpException> {
@@ -22,7 +25,7 @@ export class UserController {
     return await this.userService.getUserRecordByEmail(userObj.email)
   }
 
-  @Get('/user/get-user')
+  // @Get('/user/get-user')
   
 
   @Post('/user/create-user')
@@ -50,7 +53,6 @@ export class UserController {
       return await this.userService.createUser(userDoc, usernameDoc)
     }
     catch (e) {
-      console.log(e)
       return new HttpException({user: 'could not create user', msg: `${e}`}, 400)
     }
   }
@@ -61,24 +63,15 @@ export class UserController {
     @Req() request: Request & DecodedTokenResponse
   ): Promise <  firebase.firestore.WriteResult | HttpException > {
     const stravaUserDoc: StravaUserDoc = {
-      athleteId: params.athleteId,
-      uid: request.user.uid,
-      scope: params.scope,
-      accessToken: params.accessToken,
-      refreshToken: params.refreshToken,
-      expiresAt: params.expiresAt
+      ...params,
+      uid: request.user.uid
     }
     try { 
-      return await this.userService.createStravaUser(stravaUserDoc)
+      return await this.StravaService.createStravaUser(stravaUserDoc)
     }
     catch (e) {
-      console.log(e)
       return new HttpException({user: 'could not create user', msg: `${e}`}, 400)
     } 
   }
-  
-
-  
-  
 
 }

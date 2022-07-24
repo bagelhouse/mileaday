@@ -4,6 +4,7 @@ module.exports = {
     next: {
       rootDir: 'apps/next/',
     },
+    "indent": ["error", 2]
   },
   root: true,
 }

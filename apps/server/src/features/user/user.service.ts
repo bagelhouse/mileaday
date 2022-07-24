@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 import * as firebase from 'firebase-admin'
-import { StravaUserDoc, UserDoc, UsernameDoc } from './user.types'
+import { UserDoc, UsernameDoc } from './user.types'
 import { 
   FB_COLLECTION_USERS, 
-  FB_COLLECTION_USERNAMES,
-  FB_COLLECTION_STRAVA_ATHLETES } from './constants';
+  FB_COLLECTION_USERNAMES } from './constants'
 
 @Injectable()
 
@@ -32,12 +31,6 @@ export class UserService {
     return (await usernameDoc.get()).data() as UserDoc
   }
 
-  async getStravaUserByAthleteId(athleteId: string): Promise<StravaUserDoc> {
-    const firestore = this.firebaseApp.firestore()
-    const usernameDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${athleteId}`)
-    return (await usernameDoc.get()).data() as StravaUserDoc
-  }
-
   async createUser(
     userDocParams: UserDoc, 
     usernameDocParams: UsernameDoc
@@ -61,23 +54,4 @@ export class UserService {
       throw Error(`Error: creating user - ${JSON.stringify(e)}`)
     }
   }
-
-  async createStravaUser(
-    stravaUserDocParams: StravaUserDoc
-  ): Promise<firebase.firestore.WriteResult> {
-    const firestore = this.firebaseApp.firestore()
-    const stravaUserDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${stravaUserDocParams.athleteId}`)
-    try {
-      return await stravaUserDoc.create(stravaUserDocParams)
-    }
-    catch (e) {
-      throw Error(`Error: creating strava user - ${JSON.stringify(e)}`)
-    }
-
-
-    
-
-  }
-
-
 }

@@ -1,10 +1,13 @@
-import { firebaseAdminApp } from './firebaseAdminHarness'
-import './firebaseAuthHarness'
+import { firebaseAdminApp } from './firebaseAdminEnv'
+import './firebaseAuthEnv'
 import firebase from 'firebase/compat/app'
 import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 import { HttpStatus } from '@nestjs/common'
-import { FB_COLLECTION_USERS, FB_COLLECTION_USERNAMES, FB_COLLECTION_STRAVA_ATHLETES } from 'src/features/user/constants'
+import { FB_COLLECTION_USERS, FB_COLLECTION_USERNAMES } from 'src/features/user/constants'
+import { FB_COLLECTION_STRAVA_ATHLETES } from 'src/features/strava/constants'
+import { StravaUserDoc } from 'src/features/strava/strava.types'
+import { STRAVA_TEST_USER } from '../constants'
 
 type HarnessParams = {
   userEmail: string
@@ -24,6 +27,7 @@ export class FirebaseUserHarness {
   customToken: string | undefined
   userIdToken: string | undefined
   userCredential: firebase.auth.UserCredential | undefined
+  stravaTestUser: StravaUserDoc
   constructor(params: HarnessParams) {
     this.firebaseAdminApp = firebaseAdminApp()
     this.firebaseClientApp = firebase
@@ -33,6 +37,7 @@ export class FirebaseUserHarness {
     this.customToken = undefined
     this.userIdToken = undefined
     this.userCredential = undefined
+    this.stravaTestUser = {} as StravaUserDoc
   }
 
   async init(): Promise<status> {
@@ -50,6 +55,13 @@ export class FirebaseUserHarness {
     this.customToken = await this.firebaseAdminApp.auth().createCustomToken(this.userRecord.uid)
     this.userCredential = await this.firebaseClientApp.auth().signInWithCustomToken(this.customToken)
     this.userIdToken = await this.firebaseClientApp.auth().currentUser.getIdToken()
+    return {status: HttpStatus.OK}
+  }
+
+  async initStravaUser(): Promise<status> {
+    const stravaUserDoc = this.firebaseAdminApp.firestore().doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${STRAVA_TEST_USER.id}`)
+    const result = (await stravaUserDoc.get()).data() as unknown as StravaUserDoc
+    this.stravaTestUser = {...STRAVA_TEST_USER, ...result}
     return {status: HttpStatus.OK}
   }
 

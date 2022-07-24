@@ -1,50 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="9" failures="2" errors="0" time="7.975">
-  <testsuite name="User - /create-user" errors="0" failures="1" skipped="0" timestamp="2022-07-22T00:53:39" time="4.078" tests="2">
-    <testcase classname="User - /create-user should create user" name="User - /create-user should create user" time="1.701">
-      <failure>Request failed with status code 404</failure>
+<testsuites name="jest tests" tests="9" failures="0" errors="0" time="10.581">
+  <testsuite name="UserService" errors="0" failures="0" skipped="0" timestamp="2022-07-24T15:02:20" time="3.88" tests="2">
+    <testcase classname="UserService createUser should create user" name="UserService createUser should create user" time="1.429">
     </testcase>
-    <testcase classname="User - /create-strava-user should create user" name="User - /create-strava-user should create user" time="0.77">
-    </testcase>
-  </testsuite>
-  <testsuite name="UserService" errors="0" failures="1" skipped="0" timestamp="2022-07-22T00:53:43" time="2.212" tests="3">
-    <testcase classname="UserService createUser should create user" name="UserService createUser should create user" time="1.113">
-    </testcase>
-    <testcase classname="UserService getUserUIDByUserName should get uid by user name" name="UserService getUserUIDByUserName should get uid by user name" time="0.824">
-    </testcase>
-    <testcase classname="UserService test" name="UserService test" time="0.001">
-      <failure>Error: Cannot nest a describe inside a test. Describe block &quot;getUserUIDByUserName&quot; cannot run because it is nested within &quot;test&quot;.
-    at eventHandler (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/eventHandler.js:36:11)
-    at dispatchSync (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/state.js:86:5)
-    at _dispatchDescribe (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/index.js:99:27)
-    at describe (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/index.js:60:5)
-    at Object.&lt;anonymous&gt; (/Users/angelo/developer/mileaday/apps/server/test/integration/features/user/user.service.int.test.ts:57:3)
-    at Promise.then.completed (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/utils.js:333:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/utils.js:259:10)
-    at _callCircusTest (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/run.js:277:40)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)</failure>
-      <failure>Error: Tests cannot be nested. Test &quot;should get uid by user name&quot; cannot run because it is nested within &quot;test&quot;.
-    at eventHandler (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/eventHandler.js:146:11)
-    at dispatchSync (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/state.js:86:5)
-    at _addTest (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/index.js:226:36)
-    at test (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/index.js:165:5)
-    at /Users/angelo/developer/mileaday/apps/server/test/integration/features/user/user.service.int.test.ts:58:5
-    at _dispatchDescribe (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/index.js:105:26)
-    at describe (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/index.js:60:5)
-    at Object.&lt;anonymous&gt; (/Users/angelo/developer/mileaday/apps/server/test/integration/features/user/user.service.int.test.ts:57:3)
-    at Promise.then.completed (/Users/angelo/developer/mileaday/node_modules/jest-circus/build/utils.js:333:28)
-    at new Promise (&lt;anonymous&gt;)</failure>
+    <testcase classname="UserService getUserByUID should get uid by user name" name="UserService getUserByUID should get uid by user name" time="0.952">
     </testcase>
   </testsuite>
-  <testsuite name="User - FirebasePreauthMiddleware" errors="0" failures="0" skipped="0" timestamp="2022-07-22T00:53:45" time="1.654" tests="4">
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(user/*)" name="User - FirebasePreauthMiddleware forRoutes(user/*)" time="0.397">
+  <testsuite name="User - /create-user" errors="0" failures="0" skipped="0" timestamp="2022-07-24T15:02:24" time="2.899" tests="2">
+    <testcase classname="User - /create-user should create user" name="User - /create-user should create user" time="1.918">
     </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(TestController)" name="User - FirebasePreauthMiddleware forRoutes(TestController)" time="0.237">
+    <testcase classname="User - /create-strava-user should create user" name="User - /create-strava-user should create user" time="0.758">
     </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E tests basic auth" name="User - FirebasePreauthMiddleware - E2E tests basic auth" time="0.364">
+  </testsuite>
+  <testsuite name="User - FirebasePreauthMiddleware" errors="0" failures="0" skipped="0" timestamp="2022-07-24T15:02:27" time="2.244" tests="4">
+    <testcase classname="User - FirebasePreauthMiddleware forRoutes(user/*)" name="User - FirebasePreauthMiddleware forRoutes(user/*)" time="0.826">
     </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E should reject" name="User - FirebasePreauthMiddleware - E2E should reject" time="0.269">
+    <testcase classname="User - FirebasePreauthMiddleware forRoutes(TestController)" name="User - FirebasePreauthMiddleware forRoutes(TestController)" time="0.275">
+    </testcase>
+    <testcase classname="User - FirebasePreauthMiddleware - E2E tests basic auth" name="User - FirebasePreauthMiddleware - E2E tests basic auth" time="0.445">
+    </testcase>
+    <testcase classname="User - FirebasePreauthMiddleware - E2E should reject" name="User - FirebasePreauthMiddleware - E2E should reject" time="0.31">
+    </testcase>
+  </testsuite>
+  <testsuite name="StravaService - getNewAccessToken" errors="0" failures="0" skipped="0" timestamp="2022-07-24T15:02:29" time="1.502" tests="1">
+    <testcase classname="StravaService - getNewAccessToken should get new token" name="StravaService - getNewAccessToken should get new token" time="1.282">
     </testcase>
   </testsuite>
 </testsuites>

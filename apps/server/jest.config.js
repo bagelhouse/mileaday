@@ -30,6 +30,6 @@ module.exports = {
     }]
   ],
   setupFiles: [
-    '<rootDir>/test/harnesses/firebaseAdminHarness.ts',
+    '<rootDir>/test/harnesses/firebaseAdminEnv.ts',
   ],
 };

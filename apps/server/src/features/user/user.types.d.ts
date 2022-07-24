@@ -30,7 +30,7 @@ export interface UsernameDoc {
   uid: string // FK
 }
 
-export interface StravaUserDoc extends CreateStravaUser {
-  athleteId: string // PK
+export interface StravaUserDoc extends CreateStravaUser  {
+  id: string // PK
   uid: string // FK
 }
