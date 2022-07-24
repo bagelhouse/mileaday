@@ -5,6 +5,7 @@ import { FB_COLLECTION_STRAVA_ATHLETES } from './constants'
 import * as firebase from 'firebase-admin'
 import { StravaAppConfig } from './strava.config'
 import { shouldRefreshToken } from './strava.utils'
+import { objectToString } from 'src/utils/common'
 
 @Injectable()
 export class StravaService {
@@ -21,6 +22,7 @@ export class StravaService {
   async init(athleteId: string) {
     this.athleteId = athleteId
     this.stravaUserContext = await this.getStravaUserByAthleteId(athleteId)
+    await this.setNewAccessTokenMaybe()
     const config = {
       ...StravaAppConfig, 
       access_token: this.stravaUserContext.access_token,
@@ -33,9 +35,11 @@ export class StravaService {
   }
 
   async setNewAccessToken(tokenResponse: StravaRefreshTokenResponse): Promise<firebase.firestore.WriteResult> {
+    const tokens = objectToString(tokenResponse)
     const firestore = this.firebaseApp.firestore()
     const stravaUserDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${this.athleteId}`)
-    return await stravaUserDoc.update(tokenResponse)
+    this.stravaUserContext = {...this.stravaUserContext, ...tokens}
+    return await stravaUserDoc.update(tokens)
   }
 
   async setNewAccessTokenMaybe(): Promise<firebase.firestore.WriteResult | undefined> {

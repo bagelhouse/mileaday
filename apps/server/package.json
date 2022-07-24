@@ -50,6 +50,7 @@
     "@types/hbs": "^4.0.1",
     "@types/jest": "^28.1.4",
     "@types/moment": "^2.13.0",
+    "@types/sinon": "^10.0.13",
     "axios": "^0.27.2",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.25.4",

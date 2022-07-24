@@ -14,7 +14,6 @@ describe('StravaService', ()=>{
       const test = await stravaService.getNewAccessToken(stravaService.stravaUserContext.refresh_token)
       expect(test).toMatchObject(new StravaRefreshTokenResponse())
       expect(test.refresh_token).toBe(userHarness.stravaTestUser.refresh_token)
-      expect(test.access_token).not.toBe(userHarness.stravaTestUser.access_token)
     })
   })
 
@@ -27,6 +26,21 @@ describe('StravaService', ()=>{
       await stravaService.init(userHarness.stravaTestUser.id)
       const newTokens = await stravaService.getNewAccessToken(stravaService.stravaUserContext.refresh_token)
       const dbWrite = await stravaService.setNewAccessToken(newTokens)
+      expect(dbWrite).toMatchObject({"_writeTime": {}})
+    })
+  })
+  describe('setNewAccessTokenMaybe', () => {
+    it('should set token and return write result', async function () {
+      const userHarness = new FirebaseUserHarness({userEmail: 'team@bagelhouse.co', userPassword: 'somepass'})
+      await userHarness.init()
+      await userHarness.initStravaUser()
+      const stravaService = new StravaService()
+      stravaService.athleteId = userHarness.stravaTestUser.id
+      stravaService.stravaUserContext = userHarness.stravaTestUser
+      stravaService.stravaUserContext.expires_at = (1658600000).toString()
+      let setNewAccessTokenSpy = jest.spyOn(stravaService, 'setNewAccessToken')
+      const dbWrite = await stravaService.setNewAccessTokenMaybe()
+      expect(setNewAccessTokenSpy).toHaveBeenCalled()
       expect(dbWrite).toMatchObject({"_writeTime": {}})
     })
   })
