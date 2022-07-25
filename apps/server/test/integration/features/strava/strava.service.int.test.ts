@@ -1,6 +1,6 @@
 import { StravaService } from "src/features/strava/strava.service"
 import { FirebaseUserHarness } from 'test/harnesses/firebaseUserHarness'
-import { StravaRefreshTokenResponse } from 'src/features/strava/strava.types'
+import { StravaRefreshTokenResponse, StravaSummaryActivity } from 'src/features/strava/strava.types'
 
 describe('StravaService', ()=>{
 
@@ -44,7 +44,6 @@ describe('StravaService', ()=>{
       expect(dbWrite).toMatchObject({"_writeTime": {}})
     })
   })
-
   describe('createStravaUser', () => {
     it('should create strava user', async function () {
       const userHarness = new FirebaseUserHarness({userEmail: 'team@bagelhouse.co', userPassword: 'somepass'})
@@ -57,7 +56,6 @@ describe('StravaService', ()=>{
       expect(usernameDoc).toMatchObject(userHarness.stravaTestUser)
     })
   })
-
   describe.skip('syncAthleteActivities', () => {
     jest.setTimeout(10000000)
     it('should list all activities', async function () {
@@ -69,7 +67,7 @@ describe('StravaService', ()=>{
       await stravaService.createStravaUser(userHarness.stravaTestUser)
       await stravaService.init(userHarness.stravaTestUser.id)
       const test = await stravaService.syncAthleteActivities()
-      console.log(test)
+      expect(test[0].id).toBe(userHarness.stravaTestUser.id)
     })
   })
   describe.skip('stravaAPI_ListActivitesForPage', () => {
@@ -83,6 +81,20 @@ describe('StravaService', ()=>{
       await stravaService.createStravaUser(userHarness.stravaTestUser)
       await stravaService.init(userHarness.stravaTestUser.id)
       const test = await stravaService.stravaAPI_ListActivitesForPage(10, 200)
+      console.log(test)
+    })
+  })
+  describe('getAthleteActivities', () => {
+    jest.setTimeout(10000000)
+    it('should list all activities', async function () {
+      const userHarness = new FirebaseUserHarness({userEmail: 'team@bagelhouse.co', userPassword: 'somepass'})
+      await userHarness.init()
+      await userHarness.initStravaUser()
+      const stravaService = new StravaService()
+      await userHarness.deleteStravaUserIfExists(userHarness.stravaTestUser.id)
+      await stravaService.createStravaUser(userHarness.stravaTestUser)
+      await stravaService.init(userHarness.stravaTestUser.id)
+      const test = await stravaService.getAthleteActivities(userHarness.stravaTestUser.id)
       console.log(test)
     })
   })

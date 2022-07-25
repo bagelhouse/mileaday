@@ -117,6 +117,17 @@ export class StravaService {
     return await batch.commit()
   }
 
+  async getAthleteActivities(athleteId: string): Promise<StravaSummaryActivity[]> {
+    const firestore = this.firebaseApp.firestore()
+    const athleteSubcollection = firestore.collection(
+      `${FB_COLLECTION_STRAVA_ATHLETES}/${athleteId}/${FB_COLLECTION_STRAVA_ACTIVITIES}`
+    )
+    const result = await athleteSubcollection.get()
+    return result.docs.map((doc) => {
+      return doc.data()
+    }) as unknown as StravaSummaryActivity[]
+  }
+
 
   
 }
