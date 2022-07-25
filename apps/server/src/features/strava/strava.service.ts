@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Logger, Injectable } from '@nestjs/common'
 import strava from 'strava-v3'
 import { StravaAthleteResponse, StravaRefreshTokenResponse, StravaSummaryActivity, StravaUserDoc } from './strava.types'
 import { FB_COLLECTION_STRAVA_ATHLETES, FB_COLLECTION_STRAVA_ACTIVITIES } from './constants'
@@ -15,6 +15,7 @@ export class StravaService {
   stravaUserContext: StravaAthleteResponse
   athleteActivities: StravaSummaryActivity[]
   firebaseApp: typeof firebase
+  private readonly logger = new Logger(StravaService.name)
   constructor(
   ) {
     this.strava = strava
@@ -26,8 +27,11 @@ export class StravaService {
     this.athleteId = athleteId
     this.stravaUserContext = await this.getStravaUserByAthleteId(athleteId)
     const newAccessTokenSet = await this.setNewAccessTokenMaybe()
-    if (newAccessTokenSet) 
-      console.log(`New Access token set for user ${this.stravaUserContext.id}`)
+    if (newAccessTokenSet) {
+      const msg = `New Access token set for user ${this.stravaUserContext.id}`
+      console.log(msg)
+      this.logger.log(msg)
+    }
     const config = {
       ...StravaAppConfig, 
       access_token: this.stravaUserContext.access_token,

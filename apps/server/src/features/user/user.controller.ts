@@ -9,13 +9,16 @@ import {
   CreateUser } from './models.dto'
 import * as firebase from 'firebase-admin'
 import { StravaService } from '../strava/strava.service'
-import { CreateStravaUser } from 'src/features/strava/models.dto'
+import { CreateStravaUser, SyncStravaUser } from 'src/features/strava/models.dto'
 import { StravaUserDoc } from '../strava/strava.types'
 
 @Controller()
 export class UserController {
 
-  constructor(private readonly userService: UserService, private readonly StravaService: StravaService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly stravaService: StravaService,
+    ) {}
 
   @Get('/user/user-record')
   async getUserRecord(@Req() request: Request & DecodedTokenResponse): Promise<UserRecord | HttpException> {
@@ -26,6 +29,7 @@ export class UserController {
   }
 
   // @Get('/user/get-user')
+  // async 
   
 
   @Post('/user/create-user')
@@ -67,11 +71,28 @@ export class UserController {
       uid: request.user.uid
     }
     try { 
-      return await this.StravaService.createStravaUser(stravaUserDoc)
+      return await this.stravaService.createStravaUser(stravaUserDoc)
     }
     catch (e) {
       return new HttpException({user: 'could not create user', msg: `${e}`}, 400)
     } 
   }
+
+  // @Post('/user/sync-user')
+  // async syncStravaUser(
+  //   @Body() params: SyncStravaUser,
+  //   @Req() request: Request & DecodedTokenResponse
+  // ): Promise <  firebase.firestore.WriteResult | HttpException > {
+  //   if (params.usesStravaService) {
+  //     const athleteId = params.id
+  //     this.stravaService.init(athleteId)
+  //   }
+  //   try { 
+  //     return await this.stravaService.syncAthleteActivities()
+  //   }
+  //   catch (e) {
+  //     return new HttpException({user: 'could not sync user', msg: `${e}`}, 400)
+  //   } 
+  // }
 
 }

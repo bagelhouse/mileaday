@@ -1,43 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="15" failures="0" errors="0" time="15.277">
-  <testsuite name="StravaService" errors="0" failures="0" skipped="2" timestamp="2022-07-25T00:30:48" time="8.26" tests="7">
-    <testcase classname="StravaService getNewAccessToken should get new token" name="StravaService getNewAccessToken should get new token" time="1.102">
+<testsuites name="jest tests" tests="9" failures="0" errors="0" time="2.705">
+  <testsuite name="User Utils - strictVerifyAllParams" errors="0" failures="0" skipped="0" timestamp="2022-07-25T14:06:31" time="2.106" tests="2">
+    <testcase classname="User Utils - strictVerifyAllParams should return true if every key present" name="User Utils - strictVerifyAllParams should return true if every key present" time="0.001">
     </testcase>
-    <testcase classname="StravaService setNewAccessToken should set token and return write result" name="StravaService setNewAccessToken should set token and return write result" time="0.855">
-    </testcase>
-    <testcase classname="StravaService setNewAccessTokenMaybe should set token and return write result" name="StravaService setNewAccessTokenMaybe should set token and return write result" time="0.684">
-    </testcase>
-    <testcase classname="StravaService createStravaUser should create strava user" name="StravaService createStravaUser should create strava user" time="0.792">
-    </testcase>
-    <testcase classname="StravaService syncAthleteActivities should list all activities" name="StravaService syncAthleteActivities should list all activities" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="StravaService stravaAPI_ListActivitesForPage should list activities" name="StravaService stravaAPI_ListActivitesForPage should list activities" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="StravaService getAthleteActivities should list all activities" name="StravaService getAthleteActivities should list all activities" time="3.117">
+    <testcase classname="User Utils - strictVerifyAllParams should return key if key is NOT present" name="User Utils - strictVerifyAllParams should return key if key is NOT present" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="User - /create-user" errors="0" failures="0" skipped="0" timestamp="2022-07-25T00:30:56" time="2.984" tests="2">
-    <testcase classname="User - /create-user should create user" name="User - /create-user should create user" time="2.123">
-    </testcase>
-    <testcase classname="User - /create-strava-user should create user" name="User - /create-strava-user should create user" time="0.762">
+  <testsuite name="general utils" errors="0" failures="0" skipped="0" timestamp="2022-07-25T14:06:31" time="2.123" tests="1">
+    <testcase classname="general utils toString should convert obj to string" name="general utils toString should convert obj to string" time="0.002">
     </testcase>
   </testsuite>
-  <testsuite name="UserService" errors="0" failures="0" skipped="0" timestamp="2022-07-25T00:30:59" time="2.112" tests="2">
-    <testcase classname="UserService createUser should create user" name="UserService createUser should create user" time="1.121">
+  <testsuite name="strava utils" errors="0" failures="0" skipped="0" timestamp="2022-07-25T14:06:31" time="2.143" tests="4">
+    <testcase classname="strava utils shouldRefreshToken should return false if not expired" name="strava utils shouldRefreshToken should return false if not expired" time="0.001">
     </testcase>
-    <testcase classname="UserService getUserByUID should get uid by user name" name="UserService getUserByUID should get uid by user name" time="0.872">
+    <testcase classname="strava utils shouldRefreshToken should return true if expired" name="strava utils shouldRefreshToken should return true if expired" time="0">
+    </testcase>
+    <testcase classname="strava utils shouldRefreshToken should return true if less than an hour" name="strava utils shouldRefreshToken should return true if less than an hour" time="0.001">
+    </testcase>
+    <testcase classname="strava utils shouldRefreshToken should work even if string" name="strava utils shouldRefreshToken should work even if string" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="User - FirebasePreauthMiddleware" errors="0" failures="0" skipped="0" timestamp="2022-07-25T00:31:02" time="1.85" tests="4">
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(user/*)" name="User - FirebasePreauthMiddleware forRoutes(user/*)" time="0.417">
+  <testsuite name="UserService" errors="0" failures="0" skipped="0" timestamp="2022-07-25T14:06:31" time="2.403" tests="1">
+    <testcase classname="UserService should be defined" name="UserService should be defined" time="0.006">
     </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(TestController)" name="User - FirebasePreauthMiddleware forRoutes(TestController)" time="0.299">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E tests basic auth" name="User - FirebasePreauthMiddleware - E2E tests basic auth" time="0.434">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E should reject" name="User - FirebasePreauthMiddleware - E2E should reject" time="0.349">
+  </testsuite>
+  <testsuite name="StravaService" errors="0" failures="0" skipped="0" timestamp="2022-07-25T14:06:31" time="2.528" tests="1">
+    <testcase classname="StravaService should be defined" name="StravaService should be defined" time="0.006">
     </testcase>
   </testsuite>
 </testsuites>

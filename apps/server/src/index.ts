@@ -4,6 +4,7 @@ import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express
 import express from 'express'
 import * as functions from 'firebase-functions'
 import { AppModule } from './app.module'
+import { FirebaseLogger } from './logger/logger'
 const server: express.Express = express()
 export const createNestServer = async (expressInstance: express.Express) => {
   const adapter = new ExpressAdapter(expressInstance)
@@ -12,6 +13,7 @@ export const createNestServer = async (expressInstance: express.Express) => {
   )
   app.useGlobalPipes(new ValidationPipe())
   app.enableCors()
+  app.useLogger(app.get(FirebaseLogger))
   return app.init()
 }
 createNestServer(server)

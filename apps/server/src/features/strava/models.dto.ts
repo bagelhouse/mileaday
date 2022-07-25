@@ -12,5 +12,11 @@ export class CreateStravaUser extends StravaAthleteResponse {
   refresh_token: string
   @IsNotEmpty()
   expires_at: string
- }
+}
 
+export class SyncStravaUser {
+  @IsNotEmpty()
+  id: string
+  @IsNotEmpty()
+  usesStravaService: boolean
+}
