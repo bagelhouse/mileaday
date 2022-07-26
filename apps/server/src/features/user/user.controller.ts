@@ -3,14 +3,15 @@ import { Request } from 'express'
 import { UserRecord } from 'firebase-admin/lib/auth/user-record'
 import { UserService } from './user.service'
 import { HttpException } from '@nestjs/common'
-import { DecodedTokenResponse, UserDoc, UsernameDoc } from './user.types'
+import { DecodedTokenResponse, UserDoc, UsernameDoc } from './context/user.context.types'
 import { strictVerifyAllParams } from './user.utils'
 import { 
   CreateUser } from './models.dto'
 import * as firebase from 'firebase-admin'
 import { StravaService } from '../strava/strava.service'
 import { CreateStravaUser, SyncStravaUser } from 'src/features/strava/models.dto'
-import { StravaUserDoc } from '../strava/strava.types'
+import { StravaUserDoc } from 'src/features/strava/strava.types'
+import { UserContext } from './context/user.context'
 
 @Controller()
 export class UserController {
@@ -37,24 +38,30 @@ export class UserController {
     @Body() params: CreateUser,
     @Req() request: Request & DecodedTokenResponse
   ): Promise< firebase.firestore.WriteResult[] | HttpException > {
-    const userDoc: UserDoc = {
-      userName: params.userName,
+    const hasRequiredParams = strictVerifyAllParams({
       uid: request.user.uid,
-      displayName: params.displayName,
-      photoURL: params.photoURL,
-      usesStravaService: params.usesStravaService,
-      stravaAthleteId: params.stravaAthleteId ? params.stravaAthleteId : undefined
-    }
-    const usernameDoc: UsernameDoc = {
       userName: params.userName,
-      uid: request.user.uid
-    }
-    const hasRequiredParams = strictVerifyAllParams({...userDoc, ...usernameDoc})
+      usesStrava: params.usesStravaService ? params.stravaAthleteId : 'not using Strava'
+    })
     // ensure that the uid is correctly passed with other params
     if (hasRequiredParams !== true)
       throw new HttpException({[hasRequiredParams.toString()]: 'not found in request'}, 400)
+    const userContext = new UserContext({
+      userDocContext: {
+        userName: params.userName,
+        uid: request.user.uid,
+        displayName: params.displayName,
+        photoURL: params.photoURL,
+        usesStravaService: params.usesStravaService,
+        stravaAthleteId: params.stravaAthleteId ? params.stravaAthleteId : undefined
+      },
+      userNameDocContext: {
+        userName: params.userName,
+        uid: request.user.uid
+      }
+    })
     try { 
-      return await this.userService.createUser(userDoc, usernameDoc)
+      return await this.userService.createUser(userContext.props.userDocContext, userContext.props.userNameDocContext)
     }
     catch (e) {
       return new HttpException({user: 'could not create user', msg: `${e}`}, 400)

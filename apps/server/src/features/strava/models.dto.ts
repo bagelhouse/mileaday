@@ -1,9 +1,11 @@
-import { StravaAthleteResponse } from 'src/features/strava/strava.types'
+import { StravaUserDoc } from 'src/features/strava/strava.types'
 import { IsNotEmpty } from 'class-validator'
 
-export class CreateStravaUser extends StravaAthleteResponse {
+export class CreateStravaUser extends StravaUserDoc {
   @IsNotEmpty()
   id: string 
+  @IsNotEmpty()
+  uid: string
   @IsNotEmpty()
   scope: string
   @IsNotEmpty()
@@ -11,7 +13,7 @@ export class CreateStravaUser extends StravaAthleteResponse {
   @IsNotEmpty()
   refresh_token: string
   @IsNotEmpty()
-  expires_at: string
+  expires_at: string | number
 }
 
 export class SyncStravaUser {

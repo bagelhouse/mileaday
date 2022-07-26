@@ -1,14 +1,15 @@
 import { AthleteResponse, RefreshTokenResponse } from "strava-v3"
-import { CreateStravaUser } from "./models.dto"
 
-export class StravaAthleteResponse implements AthleteResponse {
-  id: string
+type Modify<T, R> = Omit<T, keyof R> & R
+export class StravaUserDoc implements Modify<AthleteResponse, {created_at, updated_at}> {
+  id: string //PK
+  uid: string // FK
   scope: string
   access_token: string
   refresh_token: string
-  expires_at: string
-  updated_at: Date 
-  created_at: Date
+  expires_at: number | string
+  updated_at: Date | Timestamp | number | string
+  created_at: Date | Timestamp | number | string
   resource_state?: number
   firstname?: string
   lastname?: string
@@ -28,17 +29,23 @@ export class StravaAthleteResponse implements AthleteResponse {
   follower?: string
 }
 
-export class StravaRefreshTokenResponse implements RefreshTokenResponse {
+export type Timestamp = {
+  _nanoseconds: number
+  _seconds: number
+}
+
+export class StravaRefreshTokenResponse implements Modify<RefreshTokenResponse, {expires_at, expires_in}> {
   token_type: string
   access_token: string
-  expires_at: number
-  expires_in: number
+  expires_at: number 
+  expires_in: number 
   refresh_token: string
 }
 
-export interface StravaUserDoc extends CreateStravaUser  {
-  id: string // PK
-  uid: string // FK
+export interface StravaSyncRequest {
+  requestId: string,
+  id: string, //athleteId
+  requestDate: number
 }
 
 export interface StravaSummaryActivity {

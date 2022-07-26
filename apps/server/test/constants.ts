@@ -19,13 +19,11 @@ export const STRAVA_TEST_USER: CreateStravaUser = {
   sex: "M",
   premium: true,
   summit: true,
-  created_at: new Date("2019-12-18T00:53:52Z"),
-  updated_at: new Date("2022-01-13T20:34:27Z"),
   badge_type_id: 1,
   weight: 77.1107,
   profile_medium: "https://dgalywyr863hv.cloudfront.net/pictures/athletes/49028135/13302418/4/medium.jpg",
   profile: "https://dgalywyr863hv.cloudfront.net/pictures/athletes/49028135/13302418/4/large.jpg",
   friend: null,
   follower: null
-}
+} as any
 

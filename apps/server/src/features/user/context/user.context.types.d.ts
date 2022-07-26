@@ -1,4 +1,6 @@
-import { CreateStravaUser, CreateUser } from "./models.dto"
+import { CreateStravaUser, CreateUser } from "../models.dto"
+
+// BASE USER
 
 export type DecodedTokenResponse = {
   user: {
@@ -30,7 +32,5 @@ export interface UsernameDoc {
   uid: string // FK
 }
 
-export interface StravaUserDoc extends CreateStravaUser  {
-  id: string // PK
-  uid: string // FK
-}
+
+// STRAVA USER

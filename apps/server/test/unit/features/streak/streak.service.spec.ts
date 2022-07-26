@@ -5,11 +5,11 @@ describe('StreakService', () => {
   let service: StreakService
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const testModule: TestingModule = await Test.createTestingModule({
       providers: [StreakService],
     }).compile()
 
-    service = module.get<StreakService>(StreakService)
+    service = testModule.get<StreakService>(StreakService)
   })
 
   it('should be defined', () => {

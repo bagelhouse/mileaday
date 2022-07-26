@@ -1,10 +1,13 @@
-import { Injectable, NestMiddleware } from '@nestjs/common'
+import { Injectable, NestMiddleware, Logger } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { firebaseAdminApp } from '../../firebase/firebaseAdmin.config'
+import _ from 'lodash'
+import { getCircularReplacer } from 'src/utils/common'
 
 @Injectable()
 export class FirebasePreauthMiddleware implements NestMiddleware {
     private defaultApp: any
+    private readonly logger = new Logger(FirebasePreauthMiddleware.name)
     constructor() {
         this.defaultApp = firebaseAdminApp()
     }
@@ -17,7 +20,9 @@ export class FirebasePreauthMiddleware implements NestMiddleware {
                     req['user'] = decodedToken 
                     next()
                 }).catch(error => {
-                    // console.error(error)
+                    const err = JSON.stringify(_.cloneDeep(error), getCircularReplacer())
+                    const request = JSON.stringify(_.cloneDeep(req), getCircularReplacer())
+                    this.logger.log(`Unauthorized access attempted for ${err} ${request} `)
                     this.accessDenied(req.url, res)
                 })
         } else {

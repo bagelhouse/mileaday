@@ -54,28 +54,6 @@ describe('UserService', () => {
     })
   })
 
-  // describe('createStravaUser', () => {
-  //   it('should create strava user', async function () {
-  //     const userHarness = new FirebaseUserHarness({userEmail: 'team@bagelhouse.co', userPassword: 'somepass'})
-  //     await userHarness.init()
-  //     await userHarness.deleteUserIfExists(TEST_USER_USERNAME)
-  //     const stravaUserPrams: CreateStravaUser = {
-  //       athleteId: athleteId,
-  //       scope: 'readall',
-  //       accessToken: '09830298349834',
-  //       refreshToken: 'kjlkjsdflkjsdf',
-  //       expiresAt: new Date(Date.now()).toISOString()
-  //     }
-  //     const usernameParams = {
-  //       userName: TEST_USER_USERNAME,
-  //       uid: userHarness.getUserRecord().uid
-  //     }
-  //     const userService = new UserService()
-  //     await userService.createStravaUser(userParams)
-  //     const usernameDoc = await userService.getUserUIDByUserName(TEST_USER_USERNAME)
-  //     expect(usernameDoc).toMatchObject(usernameParams)
-  //   })
-  // })
 
   // describe('getStravaUserByAthleteId', () => {
   //   it('should get uid by user name', async function () {

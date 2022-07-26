@@ -62,6 +62,8 @@ export class FirebaseUserHarness {
     const stravaUserDoc = this.firebaseAdminApp.firestore().doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${STRAVA_TEST_USER.id}`)
     const result = (await stravaUserDoc.get()).data() as unknown as StravaUserDoc
     this.stravaTestUser = {...STRAVA_TEST_USER, ...result}
+    this.stravaTestUser.uid = this.getUserRecord().uid
+    console.log(this.stravaTestUser)    
     return {status: HttpStatus.OK}
   }
 

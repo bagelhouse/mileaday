@@ -19,4 +19,9 @@ export const createNestServer = async (expressInstance: express.Express) => {
 createNestServer(server)
   .then(v => console.log('Nest Ready',))
   .catch(err => console.error('Nest broken', err))
+
+// MILE A DAY API
 export const api: functions.HttpsFunction = functions.https.onRequest(server)
+
+// MILE A DAY SYNC JOB
+

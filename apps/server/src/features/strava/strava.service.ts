@@ -1,69 +1,51 @@
 import { Logger, Injectable } from '@nestjs/common'
 import strava from 'strava-v3'
-import { StravaAthleteResponse, StravaRefreshTokenResponse, StravaSummaryActivity, StravaUserDoc } from './strava.types'
-import { FB_COLLECTION_STRAVA_ATHLETES, FB_COLLECTION_STRAVA_ACTIVITIES } from './constants'
+import { StravaRefreshTokenResponse, StravaSummaryActivity, StravaSyncRequest, StravaUserDoc } from 'src/features/strava/strava.types'
+import { FB_COLLECTION_STRAVA_ATHLETES, FB_COLLECTION_STRAVA_ACTIVITIES, FB_COLLECTION_STRAVA_SYNC_REQUESTS } from './constants'
 import * as firebase from 'firebase-admin'
 import { StravaAppConfig } from './strava.config'
 import { shouldRefreshToken } from './strava.utils'
 import { objectToString } from 'src/utils/common'
 import _ from 'lodash'
+import { v4 as uuid } from 'uuid'
 
 @Injectable()
 export class StravaService {
   strava: typeof strava
   athleteId: string
-  stravaUserContext: StravaAthleteResponse
   athleteActivities: StravaSummaryActivity[]
   firebaseApp: typeof firebase
   private readonly logger = new Logger(StravaService.name)
   constructor(
   ) {
     this.strava = strava
+    this.strava.config(StravaAppConfig)
     this.firebaseApp = firebase
-    this.athleteActivities = []
-  }
-
-  async init(athleteId: string) {
-    this.athleteId = athleteId
-    this.stravaUserContext = await this.getStravaUserByAthleteId(athleteId)
-    const newAccessTokenSet = await this.setNewAccessTokenMaybe()
-    if (newAccessTokenSet) {
-      const msg = `New Access token set for user ${this.stravaUserContext.id}`
-      console.log(msg)
-      this.logger.log(msg)
-    }
-    const config = {
-      ...StravaAppConfig, 
-      access_token: this.stravaUserContext.access_token,
-    }
-    this.strava.config(config)
-    this.strava.client(config.access_token)
   }
 
   async getNewAccessToken(refresh_token: string): Promise<StravaRefreshTokenResponse> {
     return await this.strava.oauth.refreshToken(refresh_token)
   }
 
-  async setNewAccessToken(tokenResponse: StravaRefreshTokenResponse): Promise<firebase.firestore.WriteResult> {
+  async setNewAccessToken(stravaUserContext: StravaUserDoc, tokenResponse: StravaRefreshTokenResponse): Promise<StravaRefreshTokenResponse> {
     const tokens = objectToString(tokenResponse)
     const firestore = this.firebaseApp.firestore()
-    const stravaUserDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${this.athleteId}`)
-    this.stravaUserContext = {...this.stravaUserContext, ...tokens}
-    return await stravaUserDoc.update(tokens)
+    const stravaUserDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${stravaUserContext.id}`)
+    await stravaUserDoc.update(tokens)
+    return tokens
   }
 
-  async setNewAccessTokenMaybe(): Promise<firebase.firestore.WriteResult | undefined> {
-    const context = this.stravaUserContext
+  async setNewAccessTokenMaybe(stravaUserContext: StravaUserDoc): Promise<StravaRefreshTokenResponse | undefined> {
     const now = Date.now()
-    if (!context.access_token || !context.refresh_token || !context.expires_at)
+    if (!stravaUserContext.access_token || !stravaUserContext.refresh_token || !stravaUserContext.expires_at)
       throw new Error(`Error: user missing required properties - ${JSON.stringify({
-        access_token: !context.access_token,
-        refresh_token: !context.refresh_token,
-        expires_at: !context.expires_at
+        access_token: !stravaUserContext.access_token,
+        refresh_token: !stravaUserContext.refresh_token,
+        expires_at: !stravaUserContext.expires_at
       })}`)
-    if (shouldRefreshToken(now, context.expires_at)) {
-      const newTokens = await this.getNewAccessToken(context.refresh_token)
-      return await this.setNewAccessToken(newTokens)
+    if (shouldRefreshToken(now, stravaUserContext.expires_at)) {
+      const newTokens = await this.getNewAccessToken(stravaUserContext.refresh_token)
+      return await this.setNewAccessToken(stravaUserContext, newTokens)
     }
     else return undefined
   }
@@ -75,45 +57,62 @@ export class StravaService {
   }
 
   async createStravaUser(
-    stravaUserDocParams: StravaUserDoc
+    stravaUserContext: StravaUserDoc
   ): Promise<firebase.firestore.WriteResult> {
     const firestore = this.firebaseApp.firestore()
-    const stravaUserDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${stravaUserDocParams.id}`)
+    const stravaUserDoc = firestore.doc(`${FB_COLLECTION_STRAVA_ATHLETES}/${stravaUserContext.id}`)
     try {
-      return await stravaUserDoc.create(stravaUserDocParams)
+      return await stravaUserDoc.create(stravaUserContext)
     }
     catch (e) {
       throw new Error(`Error: creating strava user - ${JSON.stringify(e)}`)
     }
   }
 
-  async syncAthleteActivities(): Promise<StravaSummaryActivity[]> {
+  async setActivitiesSyncRequest(stravaUserContext: StravaUserDoc): Promise<firebase.firestore.WriteResult> {
+    const requestId = uuid()
+    const firestore = this.firebaseApp.firestore()
+    const stravaSyncRequestDoc = firestore.doc(`${FB_COLLECTION_STRAVA_SYNC_REQUESTS}/${requestId}`)
+    const request: StravaSyncRequest = {
+      requestId: requestId,
+      id: stravaUserContext.id,
+      requestDate: Date.now()
+    }
+    return await stravaSyncRequestDoc.create(request)
+  }
+
+  async syncAthleteActivities(stravaUserContext: StravaUserDoc): Promise<StravaSummaryActivity[]> {
     let finalActivityList: StravaSummaryActivity[] = []
     let pageNum = 1 
     const per_page = 200
-    let activities = await this.stravaAPI_ListActivitesForPage(pageNum, per_page)
+    let activities = await this.stravaAPI_ListActivitesForPage(stravaUserContext, pageNum, per_page)
     if (activities.length === 0)
       return []
-    await this.batchWriteAthleteActivities(activities)
+    await this.batchWriteAthleteActivities(stravaUserContext, activities)
     while (activities.length > 0 || !_.isEmpty(activities)) {
-      activities = await this.stravaAPI_ListActivitesForPage(pageNum ++, per_page)
-      await this.batchWriteAthleteActivities(activities)
+      activities = await this.stravaAPI_ListActivitesForPage(stravaUserContext, pageNum ++, per_page)
+      await this.batchWriteAthleteActivities(stravaUserContext, activities)
       finalActivityList.push(...activities)
     }
-    this.athleteActivities = finalActivityList
     return finalActivityList
   }
 
-  async stravaAPI_ListActivitesForPage(pageNum: number, per_page: number): Promise<StravaSummaryActivity[]> {
-    return await this.strava.athlete.listActivities({page: pageNum, per_page: per_page}) as StravaSummaryActivity[]
+  async stravaAPI_ListActivitesForPage(stravaUserContext: StravaUserDoc, pageNum: number, per_page: number): Promise<StravaSummaryActivity[]> {
+    return await this.strava.athlete.listActivities(
+      {
+        page: pageNum, 
+        per_page: per_page,
+        access_token: stravaUserContext.access_token
+      }
+    ) as StravaSummaryActivity[]
   }
 
-  async batchWriteAthleteActivities(activities: StravaSummaryActivity[]): Promise<firebase.firestore.WriteResult[]> {
+  async batchWriteAthleteActivities(stravaUserContext: StravaUserDoc, activities: StravaSummaryActivity[]): Promise<firebase.firestore.WriteResult[]> {
     const firestore = this.firebaseApp.firestore()
     const batch = firestore.batch()
     activities.map((activity) => {
       const subcollectionDoc = firestore.collection(FB_COLLECTION_STRAVA_ATHLETES)
-      .doc(this.stravaUserContext.id)
+      .doc(stravaUserContext.id)
       .collection(FB_COLLECTION_STRAVA_ACTIVITIES)
       .doc(activity.id.toString())
       batch.set(subcollectionDoc, activity)
