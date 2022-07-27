@@ -119,7 +119,6 @@ describe('StravaService', ()=>{
       await userContext.initStravaContext(stravaService, userHarness.stravaTestUser.id)
       const test = await stravaService.setActivitiesSyncRequest(userHarness.stravaTestUser)
       expect(test).toBeTruthy()
-      console.log(test)
     })
   })
 })

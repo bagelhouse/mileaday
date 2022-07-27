@@ -30,7 +30,6 @@ export class UserContext {
     if (newAccessTokenSet) {
       this.props.stravaUserContext = { ...stravaUserContext, ...newAccessTokenSet }
       const msg = `New Access token set for user ${this.props.stravaUserContext.id}`
-      console.log(msg)
       this.logger.log(msg)
     }
     else this.props.stravaUserContext = stravaUserContext
