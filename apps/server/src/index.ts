@@ -8,6 +8,9 @@ import express from 'express'
 import * as functions from 'firebase-functions'
 import { AppModule } from './app.module'
 import { FirebaseLogger } from './logger/logger'
+import { FB_COLLECTION_STRAVA_SYNC_REQUESTS } from './features/strava/constants'
+import { StravaSyncRequest } from './features/strava/strava.types'
+import { syncStrava } from './features/workers/sync.app'
 const server: express.Express = express()
 export const createNestServer = async (expressInstance: express.Express) => {
   const adapter = new ExpressAdapter(expressInstance)
@@ -28,16 +31,11 @@ createNestServer(server)
 // MILE A DAY API
 export const api: functions.HttpsFunction = functions.https.onRequest(server)
 
+
 // SYNC TRIGGER
 export const createSyncJob = functions.firestore
-  .document('users/{userId}')
-  .onCreate((snap, context) => {
-    // Get an object representing the document
-    // e.g. {'name': 'Marie', 'age': 66}
-    const newValue = snap.data()
-
-    // access a particular field as you would any JS property
-    const name = newValue.name
-
-    // perform desired operations ...
+  .document(`${FB_COLLECTION_STRAVA_SYNC_REQUESTS}/{requestId}`)
+  .onCreate(async (snap, context) => {
+    const request= snap.data() as StravaSyncRequest 
+    return await syncStrava(request)
   })

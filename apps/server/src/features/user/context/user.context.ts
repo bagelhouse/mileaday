@@ -1,12 +1,12 @@
-import * as userTypes from './user.context.types'
+import { DecodedTokenResponse, UserDoc, UsernameDoc } from './user.context.types'
 import { StravaUserDoc } from 'src/features/strava/strava.types'
 import { StravaService } from 'src/features/strava/strava.service'
 import { Logger, Injectable } from '@nestjs/common'
 
 export type UserContextParams = {
-  authContext?: userTypes.DecodedTokenResponse
-  userDocContext?: userTypes.UserDoc
-  userNameDocContext?: userTypes.UsernameDoc
+  authContext?: DecodedTokenResponse
+  userDocContext?: UserDoc
+  userNameDocContext?: UsernameDoc
   stravaUserContext?: StravaUserDoc
 }
 

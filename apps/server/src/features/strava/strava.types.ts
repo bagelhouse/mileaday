@@ -48,7 +48,8 @@ export class StravaRefreshTokenResponse
 
 export interface StravaSyncRequest {
   requestId: string
-  id: string //athleteId
+  id: string //athleteId,
+  uid: string,
   requestDate: number
 }
 

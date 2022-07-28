@@ -14,9 +14,10 @@ import {
 import * as firebase from 'firebase-admin'
 import { StravaAppConfig } from './strava.config'
 import { shouldRefreshToken } from './strava.utils'
-import { objectToString } from 'src/utils/common'
+import { getCircularReplacer, objectToString } from 'src/utils/common'
 import _ from 'lodash'
 import { v4 as uuid } from 'uuid'
+import { UserDoc } from '../user/context/user.context.types'
 
 @Injectable()
 export class StravaService {
@@ -76,10 +77,10 @@ export class StravaService {
 
   async getStravaUserByAthleteId(athleteId: string): Promise<StravaUserDoc> {
     const firestore = this.firebaseApp.firestore()
-    const usernameDoc = firestore.doc(
+    const stravaUserDoc = firestore.doc(
       `${FB_COLLECTION_STRAVA_ATHLETES}/${athleteId}`
     )
-    return (await usernameDoc.get()).data() as StravaUserDoc
+    return (await stravaUserDoc.get()).data() as StravaUserDoc
   }
 
   async createStravaUser(
@@ -97,8 +98,9 @@ export class StravaService {
   }
 
   async setActivitiesSyncRequest(
-    stravaUserContext: StravaUserDoc
-  ): Promise<firebase.firestore.WriteResult> {
+    stravaUserContext: StravaUserDoc,
+    userDocContext: UserDoc
+  ): Promise<StravaSyncRequest> {
     const requestId = uuid()
     const firestore = this.firebaseApp.firestore()
     const stravaSyncRequestDoc = firestore.doc(
@@ -107,9 +109,12 @@ export class StravaService {
     const request: StravaSyncRequest = {
       requestId: requestId,
       id: stravaUserContext.id,
+      uid: userDocContext.uid,
       requestDate: Date.now(),
     }
-    return await stravaSyncRequestDoc.create(request)
+    this.logger.log(`Writing sync request: ${JSON.stringify(_.cloneDeep(request), getCircularReplacer())}`)
+    await stravaSyncRequestDoc.create(request)
+    return request
   }
 
   async syncAthleteActivities(
@@ -118,12 +123,15 @@ export class StravaService {
     let finalActivityList: StravaSummaryActivity[] = []
     let pageNum = 1
     const per_page = 200
+    this.logger.log(`Getting first pagination of activities for user ${stravaUserContext.id}...`)
     let activities = await this.stravaAPI_ListActivitesForPage(
       stravaUserContext,
       pageNum,
       per_page
     )
+    this.logger.log(`First pagination of activities retrieved with length ${activities.length}`)
     if (activities.length === 0) return []
+    this.logger.log(`Writing first pagination of activities for user ${stravaUserContext.id}`)
     await this.batchWriteAthleteActivities(stravaUserContext, activities)
     while (activities.length > 0 || !_.isEmpty(activities)) {
       activities = await this.stravaAPI_ListActivitesForPage(
@@ -131,6 +139,8 @@ export class StravaService {
         pageNum++,
         per_page
       )
+      this.logger.log(`${pageNum} pagination of activities retrieved with length ${activities.length}`)
+      this.logger.log(`Writing ${pageNum} pagination of activities for user ${stravaUserContext.id}`)
       await this.batchWriteAthleteActivities(stravaUserContext, activities)
       finalActivityList.push(...activities)
     }

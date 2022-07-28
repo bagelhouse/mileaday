@@ -1,45 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="16" failures="0" errors="0" time="16.897">
-  <testsuite name="StravaService" errors="0" failures="0" skipped="2" timestamp="2022-07-26T22:39:17" time="8.99" tests="8">
-    <testcase classname="StravaService getNewAccessToken should get new token" name="StravaService getNewAccessToken should get new token" time="1.315">
-    </testcase>
-    <testcase classname="StravaService setNewAccessToken should set token and return write result" name="StravaService setNewAccessToken should set token and return write result" time="0.703">
-    </testcase>
-    <testcase classname="StravaService setNewAccessTokenMaybe should set token and return write result" name="StravaService setNewAccessTokenMaybe should set token and return write result" time="0.529">
-    </testcase>
-    <testcase classname="StravaService createStravaUser should create strava user" name="StravaService createStravaUser should create strava user" time="0.688">
-    </testcase>
-    <testcase classname="StravaService syncAthleteActivities should list all activities" name="StravaService syncAthleteActivities should list all activities" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="StravaService stravaAPI_ListActivitesForPage should list activities" name="StravaService stravaAPI_ListActivitesForPage should list activities" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="StravaService getAthleteActivities should list all activities" name="StravaService getAthleteActivities should list all activities" time="3.031">
-    </testcase>
-    <testcase classname="StravaService setActivitiesSyncRequest should write sync request" name="StravaService setActivitiesSyncRequest should write sync request" time="0.839">
-    </testcase>
-  </testsuite>
-  <testsuite name="User - /create-user" errors="0" failures="0" skipped="0" timestamp="2022-07-26T22:39:26" time="3.221" tests="2">
-    <testcase classname="User - /create-user should create user" name="User - /create-user should create user" time="2.119">
-    </testcase>
-    <testcase classname="User - /create-strava-user should create user" name="User - /create-strava-user should create user" time="0.887">
-    </testcase>
-  </testsuite>
-  <testsuite name="UserService" errors="0" failures="0" skipped="0" timestamp="2022-07-26T22:39:29" time="2.363" tests="2">
-    <testcase classname="UserService createUser should create user" name="UserService createUser should create user" time="1.289">
-    </testcase>
-    <testcase classname="UserService getUserByUID should get uid by user name" name="UserService getUserByUID should get uid by user name" time="0.871">
-    </testcase>
-  </testsuite>
-  <testsuite name="User - FirebasePreauthMiddleware" errors="0" failures="0" skipped="0" timestamp="2022-07-26T22:39:32" time="2.282" tests="4">
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(user/*)" name="User - FirebasePreauthMiddleware forRoutes(user/*)" time="0.421">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware forRoutes(TestController)" name="User - FirebasePreauthMiddleware forRoutes(TestController)" time="0.317">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E tests basic auth" name="User - FirebasePreauthMiddleware - E2E tests basic auth" time="0.636">
-    </testcase>
-    <testcase classname="User - FirebasePreauthMiddleware - E2E should reject" name="User - FirebasePreauthMiddleware - E2E should reject" time="0.49">
+<testsuites name="jest tests" tests="1" failures="0" errors="0" time="2.07">
+  <testsuite name="syncStrava" errors="0" failures="0" skipped="0" timestamp="2022-07-28T15:46:02" time="2.05" tests="1">
+    <testcase classname="syncStrava should execute sync correctly with correct payload" name="syncStrava should execute sync correctly with correct payload" time="0.286">
     </testcase>
   </testsuite>
 </testsuites>

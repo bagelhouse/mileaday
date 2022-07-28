@@ -2,6 +2,7 @@ import { StravaService } from "src/features/strava/strava.service"
 import { FirebaseUserHarness } from 'test/harnesses/firebaseUserHarness'
 import { StravaRefreshTokenResponse, StravaSummaryActivity } from 'src/features/strava/strava.types'
 import { UserContext } from 'src/features/user/context/user.context'
+import { UserService } from "src/features/user/user.service"
 
 describe('StravaService', ()=>{
 
@@ -115,9 +116,12 @@ describe('StravaService', ()=>{
       const stravaService = new StravaService()
       await userHarness.deleteStravaUserIfExists(userHarness.stravaTestUser.id)
       await stravaService.createStravaUser(userHarness.stravaTestUser)
-      const userContext = new UserContext()
+      const userDoc = await (new UserService()).getUserByUID(userHarness.getUserRecord().uid)
+      const userContext = new UserContext({
+        userDocContext: userDoc
+      })
       await userContext.initStravaContext(stravaService, userHarness.stravaTestUser.id)
-      const test = await stravaService.setActivitiesSyncRequest(userHarness.stravaTestUser)
+      const test = await stravaService.setActivitiesSyncRequest(userContext.props.stravaUserContext, userContext.props.userDocContext)
       expect(test).toBeTruthy()
     })
   })

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { LoggerService } from '@nestjs/common'
 import { logger } from 'firebase-functions'
 
-@Injectable()
+
 export class FirebaseLogger implements LoggerService {
   log(message: any, ...optionalParams: any[]) {
     logger.log(JSON.stringify({ severity: 'INFO', message: message }))

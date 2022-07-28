@@ -17,10 +17,15 @@ export const firebaseAdminApp = () => {
     tokenUri: process.env.SERVER_FIREBASE_ADMIN_TOKEN_URI,
     type: process.env.SERVER_FIREBASE_ADMIN_TYPE,
   }
-  if (firebase.apps.length === 0)
-    firebase.initializeApp({
-      credential: firebase.credential.cert(adminConfig)
-    })
+  if (firebase.apps.length === 0) {
+    // firebase.initializeApp({
+    //   credential: firebase.credential.cert(adminConfig)
+    // })
+    // firebase.initializeApp({databaseURL: 'localhost:8080', projectId: adminConfig.projectId})
+    process.env.GCLOUD_PROJECT = adminConfig.projectId;
+    process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080';
+    firebase.initializeApp({ projectId: adminConfig.projectId})
+  }
   return firebase
 }
 

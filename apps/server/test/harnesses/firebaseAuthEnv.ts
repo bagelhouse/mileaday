@@ -14,5 +14,11 @@ export const firebaseAuthConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 }
 
-if (firebase.apps.length === 0)
-  firebase.initializeApp(firebaseAuthConfig)
+if (firebase.apps.length === 0) {
+//   firebase.initializeApp({})
+//   firebase.functions().useEmulator('localhost', 3999)
+//   firebase.firestore().useEmulator('localhost', 8080)
+//   firebase.auth().useEmulator('http://localhost:9099')
+  firebase.initializeApp({projectId: firebaseAuthConfig.projectId, apiKey: 'test', appId: 'testing'})
+  firebase.auth().useEmulator('http://localhost:9099')
+}

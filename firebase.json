@@ -17,6 +17,12 @@
     },
     "ui": {
       "enabled": true
+    },
+    "firestore": {
+      "enabled" : true
+    },
+    "auth": {
+      "enabled": true
     }
   },
   "hosting": [

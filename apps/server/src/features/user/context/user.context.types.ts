@@ -13,12 +13,12 @@ export type DecodedTokenResponse = {
     exp: number
     email: string
     email_verified: false
-    firebase: { identities: { email: [Array] }; sign_in_provider: 'password' }
+    firebase: { identities: { email: [Array<any>] }; sign_in_provider: 'password' }
     uid: string
   }
 }
 
-export interface UserDoc extends CreateUser {
+export class UserDoc extends CreateUser {
   uid: string // PK
   userName: string //FK
   photoURL: string

@@ -9,5 +9,5 @@ export class CreateUser {
   displayName: string
   @IsNotEmpty()
   usesStravaService: boolean
-  stravaAthleteId: string
+  stravaAthleteId?: string
 }
