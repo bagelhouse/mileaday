@@ -4,5 +4,13 @@
     "apps/server/node_modules": true,
     "apps/next/node_modules": true,
     "apps/expo/node_modules": true,
-  }
+  },
+  "editor.tabSize": 2,
+  "eslint.alwaysShowStatus": true,
+  "eslint.codeActionsOnSave.rules": null,
+  "eslint.workingDirectories": [
+    "app/server",
+    "app/next",
+    "app/expo"
+  ]
 }

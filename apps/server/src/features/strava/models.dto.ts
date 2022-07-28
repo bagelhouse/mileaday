@@ -3,7 +3,7 @@ import { IsNotEmpty } from 'class-validator'
 
 export class CreateStravaUser extends StravaUserDoc {
   @IsNotEmpty()
-  id: string 
+  id: string
   @IsNotEmpty()
   uid: string
   @IsNotEmpty()

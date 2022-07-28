@@ -18,21 +18,26 @@ export class UserContext {
     this.props = {}
     if (params) {
       this.props.userDocContext = params?.userDocContext
-      this.props.userNameDocContext = params?.userNameDocContext 
-      this.props.authContext = params?.authContext 
+      this.props.userNameDocContext = params?.userNameDocContext
+      this.props.authContext = params?.authContext
       this.props.stravaUserContext = params?.stravaUserContext
     }
   }
 
   async initStravaContext(stravaService: StravaService, athleteId: string) {
-    const stravaUserContext = await stravaService.getStravaUserByAthleteId(athleteId)
-    const newAccessTokenSet = await stravaService.setNewAccessTokenMaybe(stravaUserContext)
+    const stravaUserContext = await stravaService.getStravaUserByAthleteId(
+      athleteId
+    )
+    const newAccessTokenSet = await stravaService.setNewAccessTokenMaybe(
+      stravaUserContext
+    )
     if (newAccessTokenSet) {
-      this.props.stravaUserContext = { ...stravaUserContext, ...newAccessTokenSet }
+      this.props.stravaUserContext = {
+        ...stravaUserContext,
+        ...newAccessTokenSet,
+      }
       const msg = `New Access token set for user ${this.props.stravaUserContext.id}`
       this.logger.log(msg)
-    }
-    else this.props.stravaUserContext = stravaUserContext
+    } else this.props.stravaUserContext = stravaUserContext
   }
-
 }

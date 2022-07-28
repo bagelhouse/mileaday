@@ -1,4 +1,3 @@
-
 import { IsNotEmpty } from 'class-validator'
 
 export class CreateUser {
@@ -7,8 +6,8 @@ export class CreateUser {
   @IsNotEmpty()
   photoURL: string
   @IsNotEmpty()
-  displayName: string 
+  displayName: string
   @IsNotEmpty()
   usesStravaService: boolean
   stravaAthleteId: string
- }
+}

@@ -1,4 +1,4 @@
-/* globals window */
+/* globals authwindow */
 import React, { useEffect, useState } from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import uiConfig from 'firebaseui'
@@ -27,7 +27,7 @@ const firebaseAuthConfig: uiConfig.auth.Config = {
       // `next-firebase-auth`.
       false,
   },
-  siteName: 'Mile a Day'
+  siteName: 'Mile a Day',
 }
 
 const FirebaseAuth = () => {

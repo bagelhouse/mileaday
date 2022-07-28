@@ -1,7 +1,9 @@
-import { AthleteResponse, RefreshTokenResponse } from "strava-v3"
+import { AthleteResponse, RefreshTokenResponse } from 'strava-v3'
 
 type Modify<T, R> = Omit<T, keyof R> & R
-export class StravaUserDoc implements Modify<AthleteResponse, {created_at, updated_at}> {
+export class StravaUserDoc
+  implements Modify<AthleteResponse, { created_at; updated_at }>
+{
   id: string //PK
   uid: string // FK
   scope: string
@@ -25,7 +27,7 @@ export class StravaUserDoc implements Modify<AthleteResponse, {created_at, updat
   bio?: string
   badge_type_id?: number
   weight?: number
-  friend?: string 
+  friend?: string
   follower?: string
 }
 
@@ -34,17 +36,19 @@ export type Timestamp = {
   _seconds: number
 }
 
-export class StravaRefreshTokenResponse implements Modify<RefreshTokenResponse, {expires_at, expires_in}> {
+export class StravaRefreshTokenResponse
+  implements Modify<RefreshTokenResponse, { expires_at; expires_in }>
+{
   token_type: string
   access_token: string
-  expires_at: number 
-  expires_in: number 
+  expires_at: number
+  expires_in: number
   refresh_token: string
 }
 
 export interface StravaSyncRequest {
-  requestId: string,
-  id: string, //athleteId
+  requestId: string
+  id: string //athleteId
   requestDate: number
 }
 

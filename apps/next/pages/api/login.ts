@@ -1,7 +1,7 @@
 // ./pages/api/login
 import { setAuthCookies } from 'next-firebase-auth'
 import initAuth from '../../firebase/firebaseAuth'
-import { NextApiRequest, NextApiResponse } from "next"
+import { NextApiRequest, NextApiResponse } from 'next'
 
 initAuth()
 
@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await setAuthCookies(req, res)
   } catch (e) {
-    return res.status(500).json({ error: 'Server Error'})
+    return res.status(500).json({ error: 'Server Error' })
   }
   return res.status(200).json({ success: true })
 }

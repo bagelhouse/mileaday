@@ -5,7 +5,7 @@ import {
   AuthAction,
 } from 'next-firebase-auth'
 import FirebaseAuth from '../components/FirebaseAuth'
-import { Text, useSx, View, H1, P, Row, A } from 'dripsy'
+import { Text, View, P, Row } from 'dripsy'
 const styles = {
   content: {
     padding: `8px 32px`,
@@ -20,20 +20,25 @@ const styles = {
   },
 }
 
-const Auth = () => (<>
-  <View sx={{ flex: 1, justifyContent: 'center', alignItems: 'center', p: 16, bg: `$background` }}>
-    <Text sx ={{marginBottom: 15}}>
-      <P sx={{ color: 'white' }}>
-        You will be emailed when we are in beta.
-      </P>
-    </Text>
-    <Row sx={{  bg: `$background` }}>
-    <FirebaseAuth />
-    </Row>
-  </View>
-
-</>
-
+const Auth = () => (
+  <>
+    <View
+      sx={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        p: 16,
+        bg: `$background`,
+      }}
+    >
+      <Text sx={{ marginBottom: 15 }}>
+        <P sx={{ color: 'white' }}>You will be emailed when we are in beta.</P>
+      </Text>
+      <Row sx={{ bg: `$background` }}>
+        <FirebaseAuth />
+      </Row>
+    </View>
+  </>
 )
 
 export const getServerSideProps = withAuthUserTokenSSR({

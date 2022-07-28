@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { FirebaseLogger } from './logger';
+import { Module } from '@nestjs/common'
+import { FirebaseLogger } from './logger'
 
 @Module({
   providers: [FirebaseLogger],
